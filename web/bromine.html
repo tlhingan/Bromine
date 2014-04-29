@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bromine</title>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         
+         <link rel="stylesheet" href="/Javascript/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.min.css">
+         <style type="text/css">
+             #div-container-toggle {
+                 text-align:center;
+                 padding-left: 0.5%;
+                 padding-right: 0.5%;
+                 height: 100%;
+                 margin:0 auto;
+                 margin-right:0;
+             }
+         </style>
+         <script type="text/javascript" src="/Javascript/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+         <script type="text/javascript" src="/Javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+         <link rel="stylesheet" type="text/css" href="/Javascript/Jit/Examples/css/base.css"/>
+         <link rel="Stylesheet" type="text/css" href="/Javascript/Jit/Examples/css/ForceDirected.css" />
+         <script type="text/javascript" src="/Javascript/radpy.js"></script>
+         <script type="text/javascript" src="/Javascript/Jit/jit.js"></script> 
+         <script type="text/javascript" src="/Javascript/comminglingGraph.js"></script>
+         <script type="text/javascript" src="/Javascript/Enums.js"></script>     
+         <script type="text/javascript" src="/Javascript/Ajax.js"></script>
+         <script type="text/javascript" src="/Javascript/SearchMethods.js"></script>
+         <script type="text/javascript" src="/Javascript/FormEvents.js"></script>
+         <script type="text/javascript" src="/Javascript/Dom.js"></script>
+         <script type="text/javascript" src="/Javascript/BDOForms.js"></script>
+         <script type="text/javascript" src="/Javascript/GridView.js"></script>
+         <script type="text/javascript" src="/Javascript/GenericPopup.js"></script>
+         <script type="text/javascript" src="/Javascript/DocumentPopup.js"></script>
+         <script type="text/javascript" src="/Javascript/TableTop.js"></script>
+</head>
+<body>
+      <nav>
+             <div><a id="home" href="/">Home</a></div>
+             <ul id="secondary">
+                 <li><a href="#">Account Information</a></li>
+                 <li><a id="menu-button" href="#">Show Menu</a></li>
+             </ul>
+             <ul id="nav-top">
+                 <li><a>Data Management</a>
+                     <ul>
+                         <li><a href="/EntityManager.html?entity=Document">Documents</a></li>
+                     </ul>
+                 </li>
+                 <li><a>Configuration</a>
+                     <ul>
+                         <li><a href="/EntityManager.html?entity=FieldDefinition">Field Definitions</a></li>
+                         <li><a href="/EntityManager.html?entity=DocumentDefinition">Document Definitions</a></li>
+                     </ul>
+                 </li>
+                 <li><a>Demos</a>
+                     <ul>
+                         <li><a href="/Demos/TableTop.html">Tabletop</a></li>
+                         <li><a href="#">ILC</a></li>
+                     </ul>
+                 </li>
+                 <li><a href="#">Lab Write</a></li>
+                 <li><a href="#">Dean Test</a></li>
+                 <li><a>tlhIngan's Play Area</a>
+                     <ul>
+                          <li><a href="antennaPower.html">Antenna Power Calculator</a></li>
+                          <li><a href="bromine.html">Bromine</a></li>
+                     </ul>
+                 </li>
+
+             </ul>
+         </nav>
+<form action="/cgi-bin/helloworld">
+<table>
+<tr><td><br />URI:</td><td><p id="URI"></td></tr>
+<tr><td>Hardware Version:</td><td><p id="HardwareVersion"></td></tr>
+<tr><td>Product Group ID:</td><td><p id="ProductGroupID"></td></tr>
+<tr><td>Product Group:</td><td><p id="ProductGroup"></td></tr>
+<tr><td>Model:</td><td><p id="Model"></td></tr>
+<tr><td>Serial Number:</td><td><p id="SerialNumber"></td></tr>
+<Tr><td>Reader Description:</td><td><input type="text" name="ReaderDescription" id="ReaderDescription"></td></tr>
+<tr><td>Software Version:</td><td><p id="SoftwareVersion"></td></tr>
+<tr><td>Temperature:</td><td><p  id="Temperature"></td></tr>
+<tr><td>Reader Time (yyyy/mm/dd hh:mm:ss):</td><td><input type="text" name="ReaderTime" id="ReaderTime"></td></tr>
+<tr><td>Antenna Currently Being Used:</td><td><input type="text" name="CurrentAntenna" id="CurrentAntenna"></td></tr>
+<tr><td>Baud Rate:</td><td><select name="BaudRate" id="BaudRate"><option value="9600">9600</option><option value=115200>115200</option><option value=921600>921600</option></select></td></tr>
+<tr><td>Command Timeout:</td><td><input type="text" name="CommandTimeout" id="CommandTimeout"></td></tr>
+<tr><td>Transport Timeout:</td><td><input type="text" name="TransportTimeout" id="TransportTimeout"></td></tr>
+<tr><td>Enable Read Filter:</td><td><input type="radio" name="EnableReadFilter" id="EnableReadFilter" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="EnableReadFilter" id="EnableReadFilter" value="0" checked>No</td></tr>
+<tr><td>Read Filter Timeout:</td><td><input type="text" name="ReadFilterTimeout" id="ReadFilterTimeout"></td></tr>
+<tr><td>ASync Off Time:</td><td><input type="text" name="ASyncOffTime" id="ASyncOffTime"></td></tr>
+<tr><td>ASync On Time::</td><td><input type="text" name="ASyncOnTime" id="ASyncOnTime"></td></tr>
+<tr><td>Maximum Power:</td><td><p id="MaxPower"></td></tr>
+<tr><td>Minimum Power:</td><td><p id="MinPower"></td></tr>
+<tr><td>Read Power:</td><td><input type="text" name="ReadPower" id="ReadPower"></td></tr>
+<tr><td>Write Power:</td><td><input type="text" name="WritePower" id="WritePower"></td></tr>
+<tr><td>Successful Tag Operations:</td><td><p id="SuccessfulTagOp"></td></tr>
+<tr><td>Failed Tag Operations:</td><td><p id="FailedTagOp"></td></tr>
+
+<tr><td>Check Antenna Port:</td><td><input type="radio" name="CheckAntenna" id="CheckAntenna" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="CheckAntenna" id="CheckAntenna" value="0" checked>No</td></tr>
+<tr><td>Connected Antenna Ports:</td><td><p id="ConnectedAntenna"></td></tr>
+<tr><td>Available Antenna Ports:</td><td><p id="AvailableAntenna"></td></tr>
+<tr><td>Available GPIO Port Switching Pins:</td><td><input type="text" name="PortSwitchPins" id="PortSwitchPins"></td></tr>
+<tr><td>Available GPIO Input Pins:</td><td><input type="text" name="InputPins" id="InputPins"></td></tr>
+<tr><td>Available GPIO Output Pins:</td><td><input type="text" name="OutputPins" id="OutputPins"></td></tr>
+<tr><td>Port Number/Settling Time:</td><td><input type="text" name="SettlingTime" id="SettlingTime"></td></tr>
+<tr><td>Port Number/Read Length:</td><td><input type="text" name="PortRead" id="PortRead"></td></tr>
+<tr><td>Port Number/ Write Length:</td><td><input type="text" name="PortWrite" id="PortWrite"></td></tr>
+<tr><td>Tx/Rx Map:</td><td><input type="text" name="TxRxMap" id="TxRxMap"></td></tr>
+
+<tr><td>Allow Early Exit:</td><td><input type="radio" name="EarlyExit" id="EarlyExit" value="1" checked>Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="EarlyExit" id="EarlyExit" value="0">No</td></tr>
+<tr><td>Enable Powersave (Disable DRM):</td><td><input type="radio" name="PowerSave" id="PowerSave" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="PowerSave" id="PowerSave" value="0" checked>No</td></tr>
+<tr><td>Enable LBT:</td><td><p id="LBT"></td></tr>
+<tr><td>Enable SJC:</td><td><input type="radio" name="SJC" id="SJC" value="1" checked>Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="SJC" id="SJC" value="0">No</td></tr>
+<tr><td>Extended EPC:</td><td><input type="radio" name="ExtendedEPC" id="ExtendedEPC" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="ExtendedEPC" id="ExtendedEPC" value="0" checked>No</td></tr>
+<tr><td>Record Highest RSSI:</td><td><input type="radio" name="HighestRSSI" id="HighestRSSI" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="HighestRSSI" id="HighestRSSI" value="0" checked>No</td></tr>
+<tr><td>Report RSSI in dBm:</td><td><p id="RSSIdBm"></td></tr>
+<tr><td>Report Unique Tag Reads by Antenna:</td><td><input type="radio" name="UniqueAntenna" id="UniqueAntenna" value="1" checked>Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="UniqueAntenna" id="UniqueAntenna" value="0">No</td></tr>
+<tr><td>Report Unique Tag Reads by Data:</td><td><input type="radio" name="UniqueData" id="UniqueData" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="UniqueData" id="UniqueData" value="0" checked>No</td></tr>
+<tr><td>Power Mode:</td><td><select name="PowerMode" id="PowerMode"><option value="Full">Full</option><option value="MinSave">Minsave</option><option value="MedSave">MedSave</option><option value="MaxSave">MaxSave</option><option value="Sleep">Sleep</option></select></td></tr>
+<tr><td>User Mode:</td><td><select name="UserMode" id="UserMode"><option value="Unspecified">Unspecified</option><option value="Printer">Printer</option><option value="Conveyor">Conveyor</option><option value="Portal">Portal</option><option value="Handheld">Handheld</option></select></td></tr>
+
+<tr><td>Report Antennas:</td><td><input type="radio" name="ReportAntenna" id="ReportAntenna" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="ReportAntenna" id="ReportAntenna" value="0" checked>No</td></tr>
+<tr><td>Report Frequency:</td><td><input type="radio" name="ReportFrequency" id="ReportFrequency" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="ReportFrequency" id="ReportFrequency" value="0" checked>No</td></tr>
+<tr><td>Report Temperature:</td><td><input type="radio" name="ReportTemperature" id="ReportTemperature" value="1">Yes&nbsp;&nbsp;&nbsp;<input type="radio" name="ReportTemperature" id="ReportTemperature" value="0" checked>No</td></tr>
+
+<tr><td>Gen2 Backscatter Link Frequency:</td><td><p id="GEN2BLF"></td></tr>
+<tr><td>Gen2 Write Reply Timeout:</td><td><input type="text" name="GEN2WriteReplyTimeout" id="GEN2WriteReplyTimeout"></td></tr>
+<tr><td>Gen2 Write Mode:</td><td><select name="GEN2WriteMode" id="GEN2WriteMode"><option value="Word Only">Word Only</option><option value="Block Only">Block Only</option><option value="Block Fallback">Block Fallback</option></select></td></tr>
+<tr><td>Gen2 Access Password:</td><td><input type="text" name="GEN2AccessPassword" id="GEN2AccessPassword"></td></tr>
+<tr><td>Gen2 Tag Encoding Method:</td><td><select name="GEN2TagEncoding" id="GEN2TagEncoding"><option value="FM0">FM0</option><option value="M2">M2</option><option value="M4">M4</option><option value="M8">M8</option></select></td></tr>
+<tr><td>Gen2 Session:</td><td><select name="GEN2Session" id="GEN2Session"><option value="S0">S0</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></td></tr>
+<tr><td>Gen2 target Algorythm:</td><td><select name="GEN2Target" id="GEN2Target"><option value="A">A</option><option value="B">B</option><option value="AB">AB</option><option value="BA">BA</option></select></td></tr>
+<tr><td>Dynamic or Static Q Algorythm:</td><td><input type="radio" name="GEN2Q" id="GEN2Q" value="Dynamic">Dynamic&nbsp;&nbsp;&nbsp;<input type="radio" name="GEN2Q" id="GEN2Q" value="Static" checked>Static</td></tr>
+<tr><td>Tari:</td><td><select name="Tari" id="Tari"><option value="25">25 us</option><option value="12.5">12.5 us</option><option value="6.25">6.25 us</option></select></td></tr>
+<tr><td>Supported Protocols:</td><td><p id="SupportedProtocols"></td></tr>
+<tr><td>Current Protocol:</td><td><p id="CurrentProtocol"></td></tr>
+<tr><td>Read Plan:</td><td><input type="text" name="ReadPlan" id="ReadPlan"></td></tr>
+<tr><td>ISO180006B Backscatter Link Frequency:</td><td><input type="radio" name="ISOBLF" id="ISOBLF" value="40">40 kHz&nbsp;&nbsp;&nbsp;<input type="radio" name="ISOBLF" id="ISOBLF" value="160" checked>160 kHz</td></tr>
+<tr><td>ISO180006B Modulation Depth:</td><td><input type="radio" name="ISOModulationDepth" id="ISOModulationDepth" value="99">99 %&nbsp;&nbsp;&nbsp;<input type="radio" name="ISOModulationDepth" id="ISOModulationDepth" value="11" checked>11%</td></tr>
+<tr><td>ISO180006B Delimiter:</td><td><input type="radio" name="ISODelimiter" id="ISODelimiter" value="Delimiter1">Delimiter1&nbsp;&nbsp;&nbsp;<input type="radio" name="ISODelimiter" id="ISODelimiter" value="Delimiter4" checked>Delimiter4</td></tr>
+
+<tr><td>Supported Regions:</td><td><p id="SupportedRegion"></td></tr>
+<tr><td>Current Region:</td><td><select name="CurrentRegion" id="CurrentRegion"><option value=""></option></select></td></tr>
+<tr><td>Frequency Hop Time:</td><td><input type="text" name="FrequencyHopTime" id="FrequencyHopTime"></td></tr>
+<tr><td>Frequency Hop Table:</td><td><input type="text" name="FrequencyHopTable" id="FrequencyHopTable"></td></tr>
+<tr><td><input type="submit" value="Submit"</td>
+<td><button type="button" onClick="calculatePower(this.form)">Calculate Power</button></td></tr>
+</table>
+</form>
+<script type="text/javascript">
+</script>
+
+</body>
+    </html>
