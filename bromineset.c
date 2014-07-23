@@ -595,11 +595,8 @@ void importReaderConfig()
    char str_WritePower[32];
    char str_CheckAntenna[32];
    char str_PortSwitchGPOs[32];
-   char str_str_PortSwitchGPOs[32];
    char str_InputList[32];
-   char str_str_InputList[32];
    char str_OutputList[32];
-   char str_str_OutputList[32];
    char str_SettlingTime[32];
    char str_PortRead[32];
    char str_PortWrite[32];
@@ -631,11 +628,8 @@ void importReaderConfig()
    char str_region[32];
    char str_hopTime[32];
    char str_HopTable[32];
-   char str_str_HopTable[32];
    FILE *infile;
    int i;
-   int j;
-   int k;
    
    infile = fopen("/usr/lib/cgi-bin/brominedump", "r");
    fscanf(infile, "ReaderDescription=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s \

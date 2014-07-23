@@ -41,11 +41,8 @@ char str_ReadPower[32];
 char str_WritePower[32];
 char str_CheckAntenna[32];
 char str_PortSwitchGPOs[32];
-char str_str_PortSwitchGPOs[32];
 char str_InputList[32];
-char str_str_InputList[32];
 char str_OutputList[32];
-char str_str_OutputList[32];
 char str_SettlingTime[32];
 char str_PortRead[32];
 char str_PortWrite[32];
@@ -76,8 +73,18 @@ char str_modulation[32];
 char str_delimiter[32];
 char str_region[32];
 char str_hopTime[32];
-char str_HopTable[32];
-char str_str_HopTable[32];
+char str_HopTable[1024];
+char str_temperature[32];
+char str_MaxPower[32];
+char str_MinPower[32];
+char str_successfulTagOp[32];
+char str_failedTagOp[32];
+char str_connectedAntenna[32];
+char str_availableAntenna[32];
+char str_GEN2BLF[32];
+char str_supportedProtocols[32];
+char str_currentProtocol[32];
+char str_supportedRegions[64];
 char stringReaderURI[64];
 char stringHardwareVersion[64];
 char stringModel[64];
@@ -611,32 +618,16 @@ void exportReaderConfig()
 {
    FILE *outfile;
    int i;
-   int j;
-   int k;
+   char temp[32];
    
-   outfile = fopen("/usr/lib/cgi-bin/readerdump", "w");
-   fprintf(outfile, "ReaderDescription=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s \
- ASyncOnTime=%s ReadPower=%s WritePower=%s CheckAntenna=%s PortSwitchPins=%s InputPins=%s OutputPins=%s SettlingTime=%s PortRead=%s PortWrite=%s TxRxMap=%s EarlyExit=%s PowerSave=%s \
- SJC=%s ExtendedEPC=%s HighestRSSI=%s UniqueAntenna=%s UniqueData=%s PowerMode=%s UserMode=%s ReportAntenna=%s ReportFrequency=%s ReportTemperature=%s GEN2WriteReplyTimeout=%s \
- GEN2WriteMode=%s GEN2AccessPassword=%s GEN2TagEncoding=%s GEN2Session=%s GEN2Target=%s GEN2Q=%s Tari=%s ReadPlan=%s ISOBLF=%s ISOModulationDepth=%s ISODelimiter=%s CurrentRegion=%s \
- FrequencyHopTime=%s FrequencyHopTable=%s", stringDescription, str_currentTime, str_antenna, str_BaudRate, str_commandTimeout, str_transportTimeout, str_EnableReadFilter, str_ReadFilterTimeout,\
- str_ASyncOffTime, str_ASyncOnTime, str_ReadPower, str_WritePower, str_CheckAntenna, str_PortSwitchGPOs, str_InputList, str_OutputList, str_SettlingTime, str_PortRead, str_PortWrite,\
- str_TxRxMap, str_AllowEarlyExit, str_EnablePowerSave, str_SJC, str_ExtendedEPC, str_HighestRSSI, str_UniqueAntenna, str_UniqueData, str_PowerMode, str_UserMode, str_ReportAntenna,\
- str_ReportFrequency, str_ReportTemperature, str_WriteReplyTimeout, str_WriteMode, str_AccessPassword, str_TagEncoding, str_session, str_target, str_q, str_tari, str_readPlan, str_ISOBLF,\
- str_modulation, str_delimiter, str_region, str_hopTime, str_HopTable);
-
-   fclose(outfile);
-
-/* settlingtime
-portread
-portwrite
-txrxmap
-readplan
-*/
+/********************/
+/* not implemented: */
+/* readplan         */
+/********************/
  
 /* integers */
 
-      sprintf(str_BaudRate, "%d",BaudRate);
+      sprintf(str_BaudRate, "%d", BaudRate);
       sprintf(str_commandTimeout, "%d", CommandTimeout);
       sprintf(str_transportTimeout, "%d", TransportTimeout);
       sprintf(str_ASyncOffTime, "%d", ASyncOffTime);
@@ -649,6 +640,11 @@ readplan
       sprintf(str_ReadFilterTimeout, "%d", ReadFilterTimeout);
       sprintf(str_AccessPassword, "%d", accessPassword);
       sprintf(str_ISOBLF, "%d", ISOBLF);
+      sprintf(str_temperature, "%d", Temperature);
+      sprintf(str_MaxPower, "%d", MaxPower);
+      sprintf(str_MinPower, "%d", MinPower);
+      sprintf(str_successfulTagOp, "%d", TagOpSuccess);
+      sprintf(str_failedTagOp, "%d", TagOpFailures);
 
 /* booleans */
 
@@ -666,6 +662,7 @@ readplan
       sprintf(str_EnableReadFilter, "%d" ,EnableReadFilter);
 
 /* time */
+
       sprintf(str_year, "%d", currentTime.tm_year+1970);
       sprintf(str_month, "%d", currentTime.tm_mon);
       sprintf(str_day, "%d", currentTime.tm_mday);
@@ -683,100 +680,103 @@ readplan
       strcat(str_currentTime, str_min);
       strcat(str_currentTime, ":");
       strcat(str_currentTime, str_sec);
+
 /* arrays */
-/*
-      i = 0; // 1st char of current block
-      j = 0; // whitespace following current block
-      k = 0; // block number
-      while (str_InputList[j] != '\0')
-      {
-         while (str_InputList[j] != ' ')
-            j++;
-         while (str_InputList[i] == ' ')
-            i++;
-         strncpy(str_str_InputList, &str_InputList[i], j-i);
-         str_str_InputList[j-i] = '\0';
-         arrayInputList[k] = atoi(str_str_InputList);
-         k++;
-         i++;
-         j++;
-      }
 
-      i = 0; // 1st char of current block
-      j = 0; // whitespace following current block
-      k = 0; // block number
-      while (str_OutputList[j] != '\0')
-      {
-         while (str_OutputList[j] != ' ')
-            j++;
-         while (str_OutputList[i] == ' ')
-            i++;
-         strncpy(str_str_OutputList, &str_OutputList[i], j-i);
-         str_str_OutputList[j-i] = '\0';
-         arrayOutputList[k] = atoi(str_str_OutputList);
-         k++;
-      }
+    strcpy(str_connectedAntenna, "\0");
+    strcpy(str_availableAntenna, "\0");
+    strcpy(str_PortSwitchGPOs, "\0");
+    strcpy(str_HopTable, "\0");
+    strcpy(str_InputList, "\0");
+    strcpy(str_OutputList, "\0");
+    for (i = 0; i < ConnectedPortList.len; i++)
+    {
+        sprintf(temp, "%u ", ConnectedPortList.list[i]);
+        strcat(str_connectedAntenna, temp);
+    }
+    for (i = 0; i < PortList.len; i++)
+    {
+        sprintf(temp, "%u ", PortList.list[i]);
+        strcat(str_availableAntenna, temp);
+    }
+    for (i = 0; i < PortSwitchGPOs.len; i++)
+    {
+        sprintf(temp, "%u ", PortSwitchGPOs.list[i]);
+        strcat(str_PortSwitchGPOs, temp);
+    }
+    for (i = 0; i < InputList.len; i++)
+    {
+        sprintf(temp, "%u ", InputList.list[i]);
+        strcat(str_InputList, temp);
+    }
+    for (i = 0; i < OutputList.len; i++)
+    {
+        sprintf(temp, "%u ", OutputList.list[i]);
+        strcat(str_OutputList, temp);
+    }
+    for (i = 0; i < HopTable.len; i++)
+    {
+        sprintf(temp, "%" PRIu32 " ", HopTable.list[i]);
+        strcat(str_HopTable, temp);
+    }
 
-      i = 0; // 1st char of current block
-      j = 0; // whitespace following current block
-      k = 0; // block number
-      while (str_PortSwitchGPOs[j] != '\0')
-      {
-         while (str_PortSwitchGPOs[j] != ' ')
-            j++;
-         while (str_PortSwitchGPOs[i] == ' ')
-            i++;
-         strncpy(str_str_PortSwitchGPOs, &str_PortSwitchGPOs[i], j-i);
-         str_str_PortSwitchGPOs[j-i] = '\0';
-         arrayPortSwitchGPOs[k] = atoi(str_str_PortSwitchGPOs);
-         k++;
-      }
+/* arrays of arrays */
 
-      i = 0; // 1st char of current block
-      j = 0; // whitespace following current block
-      k = 0; // block number
-      while (str_HopTable[j] != '\0')
-      {
-         while (str_HopTable[j] != ' ')
-            j++;
-         while (str_HopTable[i] == ' ')
-            i++;
-         strncpy(str_str_HopTable, &str_HopTable[i], j-i);
-         str_str_HopTable[j-i] = '\0';
-         arrayHopTable[k] = atoi(str_str_HopTable);
-         k++;
-      }
-*/
+    strcpy(str_SettlingTime, "\0");
+    strcpy(str_PortRead, "\0");
+    strcpy(str_PortWrite, "\0");
+    strcpy(str_TxRxMap, "\0");
+    for(i = 0; i < SettlingTime.len; i++)
+    {
+        sprintf(temp, "%" PRIu8 " %d ", SettlingTime.list[i].port, SettlingTime.list[i].value);
+        strcat(str_SettlingTime, temp);
+    }
+    for(i = 0; i < PortRead.len; i++)
+    {
+        sprintf(temp, "%" PRIu8 " %d ", PortRead.list[i].port, PortRead.list[i].value);
+        strcat(str_PortRead, temp);
+    }
+    for(i = 0; i < PortWrite.len; i++)
+    {
+        sprintf(temp, "%" PRIu8 " %d ", PortWrite.list[i].port, PortWrite.list[i].value);
+        strcat(str_PortWrite, temp);
+    }
+    for(i = 0; i < txrxMap.len; i++)
+    {
+        sprintf(temp, "%" PRIu8 " %" PRIu8 " %" PRIu8 " ", txrxMap.list[i].antenna, txrxMap.list[i].txPort, txrxMap.list[i].rxPort);
+        strcat(str_TxRxMap, temp);
+    }
+
 /* picklists */
-/*      if (str_region == RegionList[0])
-         region = TMR_REGION_NONE;
-         else if (str_region == RegionList[1])
-              region = TMR_REGION_NA;
-              else if (str_region == RegionList[2])
-                   region = TMR_REGION_EU;
-                   else if (str_region == RegionList[3])
-                        region = TMR_REGION_KR;
-                        else if (str_region == RegionList[4])
-                             region = TMR_REGION_IN;
-                             else if (str_region == RegionList[5])
-                                  region = TMR_REGION_JP;
-                                  else if (str_region == RegionList[6])
-                                       region = TMR_REGION_PRC;
-                                       else if (str_region == RegionList[7])
-                                            region = TMR_REGION_EU2;
-                                            else if (str_region == RegionList[8])
-                                                 region = TMR_REGION_EU3;
-                                                 else if (str_region == RegionList[9])
-                                                      region = TMR_REGION_KR2;
-                                                      else if (str_region == RegionList[10])
-                                                           region = TMR_REGION_PRC2;
-                                                           else if (str_region == RegionList[11])
-                                                                region = TMR_REGION_AU;
-                                                                else if (str_region == RegionList[12])
-                                                                     region = TMR_REGION_NZ;
-                                                                     else if (str_region == RegionList[13])
-                                                                          region = TMR_REGION_OPEN;
-*/
+
+      if (region == TMR_REGION_NONE)
+         strcpy(str_region, RegionList[0]);
+         else if (region == TMR_REGION_NA)
+                 strcpy(str_region, RegionList[1]);
+              else if (region == TMR_REGION_EU)
+                      strcpy(str_region, RegionList[2]);
+                   else if (region == TMR_REGION_KR)
+                           strcpy(str_region, RegionList[3]);
+                        else if (region == TMR_REGION_IN)
+                                strcpy(str_region, RegionList[4]);
+                             else if (region == TMR_REGION_JP)
+                                     strcpy(str_region, RegionList[5]);
+                                  else if (region == TMR_REGION_PRC)
+                                          strcpy(str_region, RegionList[6]);
+                                       else if (region == TMR_REGION_EU2)
+                                               strcpy(str_region, RegionList[7]);
+                                            else if (region == TMR_REGION_EU3)
+                                                    strcpy(str_region, RegionList[8]);
+                                                 else if (region == TMR_REGION_KR2)
+                                                         strcpy(str_region, RegionList[9]);
+                                                      else if (region == TMR_REGION_PRC2)
+                                                              strcpy(str_region, RegionList[10]);
+                                                           else if (region == TMR_REGION_AU)
+                                                                   strcpy(str_region, RegionList[11]);
+                                                                else if (region == TMR_REGION_NZ)
+                                                                        strcpy(str_region, RegionList[12]);
+                                                                     else if (region == TMR_REGION_OPEN)
+                                                                             strcpy(str_region, RegionList[13]);
        if (userMode == TMR_SR_USER_MODE_UNSPEC)
           strcpy(str_UserMode, "Unspecified");
           else if (userMode == TMR_SR_USER_MODE_PRINTER)
@@ -846,16 +846,37 @@ readplan
             else if (modulation == TMR_ISO180006B_ModulationDepth11percent)
                     strcpy(str_modulation, "11");
 
+/* strings */
+
+   strcpy(str_GEN2BLF, gen2LinkFrequencyNames[Gen2BLF]);
+   strcpy(str_supportedProtocols, "\0");
+   strcpy(str_supportedRegions, "\0");
+   for(i = 0; i < supportedProtocols.len; i++)
+   {
+      sprintf(temp, "%s ", protocolNames[supportedProtocols.list[i]]);
+      strcat(str_supportedProtocols, temp);
+   }
+   sprintf(str_currentProtocol, "%s", protocolNames[protocol]);
+   for(i = 0; i < regionList.len - 1; i++)
+   {
+      sprintf(temp, "%s ", RegionList[regionList.list[i]]);
+      strcat(str_supportedRegions, temp);
+   }
+
+/* writing to file */
    outfile = fopen("/usr/lib/cgi-bin/readerdump", "w");
-   fprintf(outfile, "ReaderDescription=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s \
- ASyncOnTime=%s ReadPower=%s WritePower=%s CheckAntenna=%s PortSwitchPins=%s InputPins=%s OutputPins=%s SettlingTime=%s PortRead=%s PortWrite=%s TxRxMap=%s EarlyExit=%s PowerSave=%s \
- SJC=%s ExtendedEPC=%s HighestRSSI=%s UniqueAntenna=%s UniqueData=%s PowerMode=%s UserMode=%s ReportAntenna=%s ReportFrequency=%s ReportTemperature=%s GEN2WriteReplyTimeout=%s \
- GEN2WriteMode=%s GEN2AccessPassword=%s GEN2TagEncoding=%s GEN2Session=%s GEN2Target=%s GEN2Q=%s Tari=%s ReadPlan=%s ISOBLF=%s ISOModulationDepth=%s ISODelimiter=%s CurrentRegion=%s \
- FrequencyHopTime=%s FrequencyHopTable=%s", stringDescription, str_currentTime, str_antenna, str_BaudRate, str_commandTimeout, str_transportTimeout, str_EnableReadFilter, str_ReadFilterTimeout,\
- str_ASyncOffTime, str_ASyncOnTime, str_ReadPower, str_WritePower, str_CheckAntenna, str_PortSwitchGPOs, str_InputList, str_OutputList, str_SettlingTime, str_PortRead, str_PortWrite,\
- str_TxRxMap, str_AllowEarlyExit, str_EnablePowerSave, str_SJC, str_ExtendedEPC, str_HighestRSSI, str_UniqueAntenna, str_UniqueData, str_PowerMode, str_UserMode, str_ReportAntenna,\
- str_ReportFrequency, str_ReportTemperature, str_WriteReplyTimeout, str_WriteMode, str_AccessPassword, str_TagEncoding, str_session, str_target, str_q, str_tari, str_readPlan, str_ISOBLF,\
- str_modulation, str_delimiter, str_region, str_hopTime, str_HopTable);
+   fprintf(outfile, "URI=%s HardwareVersion=%s ProductGroupID=%s Model=%s SerialNumber=%s ReaderDescription=%s SoftwareVersion=%s Temperature=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s \
+CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s ASyncOnTime=%s MaxPower=%s MinPower=%s ReadPower=%s WritePower=%s SuccessfulTagOp=%s FailedTagOp=%s \
+CheckAntenna=%s ConnectedAntenna=%s AvailableAntenna=%s PortSwitchPins=%s InputPins=%s OutputPins=%s SettlingTime=%s PortRead=%s PortWrite=%s TxRxMap=%s EarlyExit=%s PowerSave=%s SJC=%s \
+ExtendedEPC=%s HighestRSSI=%s UniqueAntenna=%s UniqueData=%s PowerMode=%s UserMode=%s ReportAntenna=%s ReportFrequency=%s ReportTemperature=%s GEN2BLF=%s GEN2WriteReplyTimeout=%s \
+ GEN2WriteMode=%s GEN2AccessPassword=%s GEN2TagEncoding=%s GEN2Session=%s GEN2Target=%s GEN2Q=%s Tari=%s SupportedProtocols=%s CurrentProtocols=%s ReadPlan=%s ISOBLF=%s ISOModulationDepth=%s \
+ISODelimiter=%s SupportedRegion=%s CurrentRegion=%s FrequencyHopTime=%s FrequencyHopTable=%s",\
+ stringReaderURI, stringHardwareVersion, stringProductGroup, stringModel, stringSerialNumber, stringDescription, stringSoftwareVersion, str_temperature,\
+ str_currentTime, str_antenna, str_BaudRate, str_commandTimeout, str_transportTimeout, str_EnableReadFilter, str_ReadFilterTimeout, str_ASyncOffTime, str_ASyncOnTime, str_MaxPower, str_MinPower,\
+ str_ReadPower, str_WritePower, str_successfulTagOp, str_failedTagOp, str_CheckAntenna, str_connectedAntenna, str_availableAntenna, str_PortSwitchGPOs, str_InputList, str_OutputList,\
+ str_SettlingTime, str_PortRead, str_PortWrite, str_TxRxMap, str_AllowEarlyExit, str_EnablePowerSave, str_SJC, str_ExtendedEPC, str_HighestRSSI, str_UniqueAntenna, str_UniqueData, str_PowerMode,\
+ str_UserMode, str_ReportAntenna, str_ReportFrequency, str_ReportTemperature, str_GEN2BLF, str_WriteReplyTimeout, str_WriteMode, str_AccessPassword, str_TagEncoding, str_session, str_target, str_q,\
+ str_tari, str_supportedProtocols, str_currentProtocol, str_readPlan, str_ISOBLF, str_modulation, str_delimiter, str_supportedRegions, str_region, str_hopTime, str_HopTable);
 
    fclose(outfile);
 
@@ -863,7 +884,7 @@ readplan
 
 void initVars()
 {
-   strcpy(stringDescription,"" );
+   strcpy(stringDescription, "");
    BaudRate = 0;
    CommandTimeout = 0;
    TransportTimeout = 0;
@@ -891,62 +912,7 @@ void initVars()
    EnableReadFilter = 0;
    ExtendedEPC = 0;
    region = TMR_REGION_NA; 
-   strcpy(str_currentTime, "\0");
-   strcpy(str_year, "\0");
-   strcpy(str_month, "\0");
-   strcpy(str_day, "\0");
-   strcpy(str_hour, "\0");
-   strcpy(str_min, "\0");
-   strcpy(str_sec, "\0");
-   strcpy(str_antenna, "\0");
-   strcpy(str_BaudRate, "\0");
-   strcpy(str_commandTimeout, "\0");
-   strcpy(str_transportTimeout, "\0");
-   strcpy(str_EnableReadFilter, "\0");
-   strcpy(str_ReadFilterTimeout, "\0");
-   strcpy(str_ASyncOffTime, "\0");
-   strcpy(str_ASyncOnTime, "\0");
-   strcpy(str_ReadPower, "\0");
-   strcpy(str_WritePower, "\0");
-   strcpy(str_CheckAntenna, "\0");
-   strcpy(str_PortSwitchGPOs, "\0");
-   strcpy(str_str_PortSwitchGPOs, "\0");
-   strcpy(str_InputList, "\0");
-   strcpy(str_str_InputList, "\0");
-   strcpy(str_OutputList, "\0");
-   strcpy(str_str_OutputList, "\0");
-   strcpy(str_SettlingTime, "\0");
-   strcpy(str_PortRead, "\0");
-   strcpy(str_PortWrite, "\0");
-   strcpy(str_TxRxMap, "\0");
-   strcpy(str_AllowEarlyExit, "\0");
-   strcpy(str_EnablePowerSave, "\0");
-   strcpy(str_SJC, "\0");
-   strcpy(str_ExtendedEPC, "\0");
-   strcpy(str_HighestRSSI, "\0");
-   strcpy(str_UniqueAntenna, "\0");
-   strcpy(str_UniqueData, "\0");
-   strcpy(str_PowerMode, "\0");
-   strcpy(str_UserMode, "\0");
-   strcpy(str_ReportAntenna, "\0");
-   strcpy(str_ReportFrequency, "\0");
-   strcpy(str_ReportTemperature, "\0");
-   strcpy(str_WriteReplyTimeout, "\0");
-   strcpy(str_WriteMode, "\0");
-   strcpy(str_AccessPassword, "\0");
-   strcpy(str_TagEncoding, "\0");
-   strcpy(str_session, "\0");
-   strcpy(str_target, "\0");
-   strcpy(str_q, "\0");
-   strcpy(str_tari, "\0");
-   strcpy(str_readPlan, "\0");
-   strcpy(str_ISOBLF, "\0");
-   strcpy(str_modulation, "\0");
-   strcpy(str_delimiter, "\0");
-   strcpy(str_region, "\0");
-   strcpy(str_hopTime, "\0");
-   strcpy(str_HopTable, "\0");
-   strcpy(str_str_HopTable, "\0");
+
 }
 
 int main(int argc, char *argv[])
