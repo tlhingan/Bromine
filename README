@@ -1,0 +1,4 @@
+Bromine is a web-based reader configuration utility that employs ThingMagic's Mercury API.
+bromine.c is a c program that receives configuration settings from the webpage and writes them to a textfile called brominedump
+BromineGet.c is a c program that connects to the ThingMagic reader, polls it for it's complete configuration and prints it to the screen.
+BromineSet.c is a c program that connects to the ThingMagic reader, loads the configuration settings from the textfile brominedump and pushes the settings to the reader.

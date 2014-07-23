@@ -69,7 +69,7 @@
 
              </ul>
          </nav>
-<form action="/cgi-bin/helloworld">
+<form action="/cgi-bin/bromine">
 <table>
 <tr><td><br />URI:</td><td><p id="URI"></td></tr>
 <tr><td>Hardware Version:</td><td><p id="HardwareVersion"></td></tr>
@@ -131,7 +131,7 @@
 <tr><td>Gen2 Session:</td><td><select name="GEN2Session" id="GEN2Session"><option value="S0">S0</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></td></tr>
 <tr><td>Gen2 target Algorythm:</td><td><select name="GEN2Target" id="GEN2Target"><option value="A">A</option><option value="B">B</option><option value="AB">AB</option><option value="BA">BA</option></select></td></tr>
 <tr><td>Dynamic or Static Q Algorythm:</td><td><input type="radio" name="GEN2Q" id="GEN2Q" value="Dynamic">Dynamic&nbsp;&nbsp;&nbsp;<input type="radio" name="GEN2Q" id="GEN2Q" value="Static" checked>Static</td></tr>
-<tr><td>Tari:</td><td><select name="Tari" id="Tari"><option value="25">25 us</option><option value="12.5">12.5 us</option><option value="6.25">6.25 us</option></select></td></tr>
+<tr><td>Tari:</td><td><select name="Tari" id="Tari"><option value="25us">25 us</option><option value="12.5us">12.5 us</option><option value="6.25us">6.25 us</option></select></td></tr>
 <tr><td>Supported Protocols:</td><td><p id="SupportedProtocols"></td></tr>
 <tr><td>Current Protocol:</td><td><p id="CurrentProtocol"></td></tr>
 <tr><td>Read Plan:</td><td><input type="text" name="ReadPlan" id="ReadPlan"></td></tr>
@@ -140,7 +140,7 @@
 <tr><td>ISO180006B Delimiter:</td><td><input type="radio" name="ISODelimiter" id="ISODelimiter" value="Delimiter1">Delimiter1&nbsp;&nbsp;&nbsp;<input type="radio" name="ISODelimiter" id="ISODelimiter" value="Delimiter4" checked>Delimiter4</td></tr>
 
 <tr><td>Supported Regions:</td><td><p id="SupportedRegion"></td></tr>
-<tr><td>Current Region:</td><td><select name="CurrentRegion" id="CurrentRegion"><option value=""></option></select></td></tr>
+<tr><td>Current Region:</td><td><select name="CurrentRegion" id="CurrentRegion"><option value="North America"></option></select></td></tr>
 <tr><td>Frequency Hop Time:</td><td><input type="text" name="FrequencyHopTime" id="FrequencyHopTime"></td></tr>
 <tr><td>Frequency Hop Table:</td><td><input type="text" name="FrequencyHopTable" id="FrequencyHopTable"></td></tr>
 <tr><td><input type="submit" value="Submit"</td>
@@ -148,7 +148,30 @@
 </table>
 </form>
 <script type="text/javascript">
+function loadFile()
+{
+   var readFile = new XMLHttpRequest();
+   readFile.open('GET', 'readerdump');
+   readFile.onreadystatechange = function()
+   {
+      if (readFile.readyState == 4)
+      {
+         if (readFile.status == 200)
+         {
+            var lines = readFile.responseText.split(/\n/g);
+            lines.forEach(function(line, i)
+            {
+            // 'line' is a line of your file, 'i' is the line number (starting at 0)
+            });
+         } else
+           {
+           // (something went wrong with the request)
+           }
+      }
+   }  
+   req.send();
+}
 </script>
 
 </body>
-    </html>
+</html>

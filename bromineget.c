@@ -21,7 +21,63 @@ TMR_Status ret;
 TMR_TransportListenerBlock tlb;
 TMR_ReadListenerBlock rlb;
 TMR_ReadExceptionListenerBlock reb;
- 
+
+char str_currentTime[32];
+char str_year[5];
+char str_month[3];
+char str_day[3];
+char str_hour[3];
+char str_min[3];
+char str_sec[3];
+char str_antenna[32];
+char str_BaudRate[32];
+char str_commandTimeout[32];
+char str_transportTimeout[32];
+char str_EnableReadFilter[32];
+char str_ReadFilterTimeout[32];
+char str_ASyncOffTime[32];
+char str_ASyncOnTime[32];
+char str_ReadPower[32];
+char str_WritePower[32];
+char str_CheckAntenna[32];
+char str_PortSwitchGPOs[32];
+char str_str_PortSwitchGPOs[32];
+char str_InputList[32];
+char str_str_InputList[32];
+char str_OutputList[32];
+char str_str_OutputList[32];
+char str_SettlingTime[32];
+char str_PortRead[32];
+char str_PortWrite[32];
+char str_TxRxMap[32];
+char str_AllowEarlyExit[32];
+char str_EnablePowerSave[32];
+char str_SJC[32];
+char str_ExtendedEPC[32];
+char str_HighestRSSI[32];
+char str_UniqueAntenna[32];
+char str_UniqueData[32];
+char str_PowerMode[32];
+char str_UserMode[32];
+char str_ReportAntenna[32];
+char str_ReportFrequency[32];
+char str_ReportTemperature[32];
+char str_WriteReplyTimeout[32];
+char str_WriteMode[32];
+char str_AccessPassword[32];
+char str_TagEncoding[32];
+char str_session[32];
+char str_target[32];
+char str_q[32];
+char str_tari[32];
+char str_readPlan[32];
+char str_ISOBLF[32];
+char str_modulation[32];
+char str_delimiter[32];
+char str_region[32];
+char str_hopTime[32];
+char str_HopTable[32];
+char str_str_HopTable[32];
 char stringReaderURI[64];
 char stringHardwareVersion[64];
 char stringModel[64];
@@ -119,7 +175,7 @@ TMR_ISO180006B_Delimiter delimiter;
 struct tm currentTime;
 
 static const char *RegionList[] = {"Unspecified", "North America", "European Union", "Korea", "India", "Japan", "China", "European Union 2", "European Union 3", "Korea 2", "China 2", "Australia", "New Zealand", "Open"};
-static const char *PowerModeList[] = {"Full", "Minsave", "MedSave", "MaxSave", "Sleep"};
+static const char *PowerModeList[] = {"Full", "MinSave", "MedSave", "MaxSave", "Sleep"};
 static const char *UserModeList[] = {"Unspecified", "Printer", "Conveyor", "Portal", "Handheld"};
 static const char *tagEncodingNames[] = {"FM0", "M2", "M4", "M8"};
 static const char *sessionNames[] = {"S0", "S1", "S2", "S3"};
@@ -186,184 +242,6 @@ void exceptionCallback(TMR_Reader *reader, TMR_Status error, void *cookie)
 {
   fprintf(stdout, "Error:%s\n", TMR_strerr(reader, error));
 }
-
-void setReaderConfig()
-{
-/*
- BaudRate = 115200;
- CommandTimeout = 1000;
- TransportTimeout = 1000;
- ASyncOffTime = 0;
- ASyncOnTime = 250;
- HopTime = 100;
- Gen2BLF = 2;
- Gen2WriteReplyTimeout = 20000;
-*/
- ReadPower = 2250;
-/*
- Antenna = 1;
- ReadFilterTimeout = 1000;
-
- arrayInputList[0] = 1;
- arrayInputList[1] = 2;
- arrayInputList[2] = 3;
- arrayInputList[3] = 4;
-
-
- arrayOutputList[0] = 1;
- arrayOutputList[1] = 2;
- arrayOutputList[2] = 3;
- arrayOutputList[3] = 4;
-
-
- arrayPortSwitchGPOs[0] = 1;
- arrayPortSwitchGPOs[1] = 2;
- arrayPortSwitchGPOs[2] = 3;
- arrayPortSwitchGPOs[3] = 4;
-
- arrayHopTable[0] = 906750;
- arrayHopTable[1] = 923250;
-*/
-// arrayHopTable[2] = 0;
-/* arraySettlingTime[0].port = 0;
- arraySettlingTime[0].value = 100;
- arrayPortRead[0].port = 1;
- arrayPortRead[0].value = 200;
- arrayPortWrite[0].port = 2;
- arrayPortWrite[0].value= 300;
- arrayTxRxMap[0].antenna = 1;
- arrayTxRxMap[0].txPort = 2;
- arrayTxRxMap[0].rxPort = 3;*/
-/*
- CheckPort = false;
- WriteEarlyExit = true;
- EnablePowerSave = false;
- AntennaEnable = false;
- FrequencyEnable = false;
- TemperatureEnable = false;
- RecordHighestRSSI = false;
- UniqueByAntenna = true;
- UniqueByData = false;
- EnableSJC = true;
- ExtendedEPC = false;
- EnableReadFilter = false;
-*/
-// region = TMR_REGION_NA;
-/* userMode = TMR_SR_USER_MODE_UNSPEC;
- powerMode = TMR_SR_POWER_MODE_FULL;
- accessPassword = 0;
- tagEncoding = TMR_GEN2_MILLER_M_8;
- session = TMR_GEN2_SESSION_S0;
- target = TMR_GEN2_TARGET_A;
- q.type = TMR_SR_GEN2_Q_STATIC;
- tari = TMR_GEN2_TARI_6_25US;
-*/
-/* antennaList[0] = 1;
- antennaList[1] = 2;
- antennaList[2] = 3;
- antennaList[3] = 4;
- readPlan.u.simple.antennas.list = antennaList;
-*/
-/*
- readPlan.u.simple.filter->type = TMR_FILTER_TYPE_TAG_DATA;
- readPlan.u.simple.tagop->type = TMR_TAGOP_GEN2_READDATA;
- readPlan.weight = 100;
-*/
-/*
- ISOBLF = 160;
- modulation = TMR_ISO180006B_ModulationDepth11percent;
- delimiter = TMR_ISO180006B_Delimiter4;
- writeMode = TMR_GEN2_WORD_ONLY;
- currentTime.tm_year = 114;
- currentTime.tm_mon = 3;
- currentTime.tm_mday = 2;
- currentTime.tm_hour = 8;
- currentTime.tm_min = 23;
- currentTime.tm_sec = 32;
-*/ 
- ret = TMR_paramSet(rp, TMR_PARAM_REGION_ID, &region);
- /* integers */
-
- ret = TMR_paramSet(rp, TMR_PARAM_BAUDRATE, &BaudRate);
-
- ret = TMR_paramSet(rp, TMR_PARAM_COMMANDTIMEOUT, &CommandTimeout);
- ret = TMR_paramSet(rp, TMR_PARAM_TRANSPORTTIMEOUT, &TransportTimeout);
- ret = TMR_paramSet(rp, TMR_PARAM_READ_ASYNCOFFTIME, &ASyncOffTime);
- ret = TMR_paramSet(rp, TMR_PARAM_READ_ASYNCONTIME, &ASyncOnTime);
- ret = TMR_paramSet(rp, TMR_PARAM_REGION_HOPTIME, &HopTime);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_BLF, &Gen2BLF);
- ret = TMR_paramSet(rp, TMR_PARAM_READER_WRITE_REPLY_TIMEOUT, &Gen2WriteReplyTimeout);
- ret = TMR_paramSet(rp, TMR_PARAM_RADIO_READPOWER, &ReadPower);
- ret = TMR_paramSet(rp, TMR_PARAM_RADIO_WRITEPOWER, &WritePower);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGOP_ANTENNA, &Antenna);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGREADDATA_READFILTERTIMEOUT, &ReadFilterTimeout);
-
- /* integer arrays */
-
- InputList.list = arrayInputList;
- InputList.len = 4;
- ret = TMR_paramSet(rp, TMR_PARAM_GPIO_INPUTLIST, &InputList);
- PortSwitchGPOs.list = arrayPortSwitchGPOs;
- PortSwitchGPOs.len = 0;
- ret = TMR_paramSet(rp, TMR_PARAM_ANTENNA_PORTSWITCHGPOS, &PortSwitchGPOs);
- OutputList.list = arrayOutputList;
- OutputList.len = 0;
- ret = TMR_paramSet(rp, TMR_PARAM_GPIO_OUTPUTLIST, &OutputList);
- HopTable.list = arrayHopTable;
- HopTable.len = 0;
- ret = TMR_paramSet(rp, TMR_PARAM_REGION_HOPTABLE, &HopTable);
-
- /* integer arrays arrays */
-
- SettlingTime.list = arraySettlingTime;
- ret = TMR_paramSet(rp, TMR_PARAM_ANTENNA_SETTLINGTIMELIST, &SettlingTime);
- PortRead.list = arrayPortRead;
- ret = TMR_paramSet(rp, TMR_PARAM_RADIO_PORTREADPOWERLIST, &PortRead);
- PortWrite.list = arrayPortWrite;
- ret = TMR_paramSet(rp, TMR_PARAM_RADIO_PORTWRITEPOWERLIST, &PortWrite);
- txrxMap.list = arrayTxRxMap;
- ret = TMR_paramSet(rp, TMR_PARAM_ANTENNA_TXRXMAP, &txrxMap);
- /* strings */
-
- description.value = stringDescription;
- ret = TMR_paramSet(rp, TMR_PARAM_READER_DESCRIPTION, &description);
-
- /* booleans */
-
- ret = TMR_paramSet(rp, TMR_PARAM_ANTENNA_CHECKPORT, &CheckPort);
- ret = TMR_paramSet(rp, TMR_PARAM_READER_WRITE_EARLY_EXIT, &WriteEarlyExit);
- ret = TMR_paramSet(rp, TMR_PARAM_RADIO_ENABLEPOWERSAVE, &EnablePowerSave);
- ret = TMR_paramSet(rp, TMR_PARAM_REGION_LBT_ENABLE, &LBTEnable);
- ret = TMR_paramSet(rp, TMR_PARAM_STATUS_ENABLE_ANTENNAREPORT, &AntennaEnable);
- ret = TMR_paramSet(rp, TMR_PARAM_STATUS_ENABLE_FREQUENCYREPORT, &FrequencyEnable);
- ret = TMR_paramSet(rp, TMR_PARAM_STATUS_ENABLE_TEMPERATUREREPORT, &TemperatureEnable);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGREADDATA_RECORDHIGHESTRSSI, &RecordHighestRSSI);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGREADDATA_REPORTRSSIINDBM, &RSSIdBm);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGREADDATA_UNIQUEBYANTENNA, &UniqueByAntenna);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGREADDATA_UNIQUEBYDATA, &UniqueByData);
- ret = TMR_paramSet(rp, TMR_PARAM_RADIO_ENABLESJC, &EnableSJC);
- ret = TMR_paramSet(rp, TMR_PARAM_EXTENDEDEPC, &ExtendedEPC);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGREADDATA_ENABLEREADFILTER, &EnableReadFilter);
-
- /* the rest */
-
- ret = TMR_paramSet(rp, TMR_PARAM_USERMODE, &userMode);
- ret = TMR_paramSet(rp, TMR_PARAM_POWERMODE, &powerMode);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_ACCESSPASSWORD, &accessPassword);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_TAGENCODING, &tagEncoding);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_SESSION, &session);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_TARGET, &target);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_Q, &q);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_TARI, &tari);
- ret = TMR_paramSet(rp, TMR_PARAM_TAGOP_PROTOCOL, &protocol);
- ret = TMR_paramSet(rp, TMR_PARAM_READ_PLAN, &readPlan);
- ret = TMR_paramSet(rp, TMR_PARAM_ISO180006B_BLF, &ISOBLF);
- ret = TMR_paramSet(rp, TMR_PARAM_ISO180006B_MODULATION_DEPTH, &modulation);
- ret = TMR_paramSet(rp, TMR_PARAM_ISO180006B_DELIMITER, &delimiter);
- ret = TMR_paramSet(rp, TMR_PARAM_GEN2_WRITEMODE, &writeMode);
- ret = TMR_paramSet(rp, TMR_PARAM_CURRENTTIME, &currentTime);
-
-} 
 
 void getReaderConfig()
 {
@@ -729,71 +607,15 @@ void setupReader(char *arg)
   ret = TMR_addReadExceptionListener(rp, &reb);
 }
 
-void importReaderConfig()
+void exportReaderConfig()
 {
-   char str_currentTime[32];
-   char str_year[5];
-   char str_month[3];
-   char str_day[3];
-   char str_hour[3];
-   char str_min[3];
-   char str_sec[3];
-   char str_antenna[32];
-   char str_BaudRate[32];
-   char str_commandTimeout[32];
-   char str_transportTimeout[32];
-   char str_EnableReadFilter[32];
-   char str_ReadFilterTimeout[32];
-   char str_ASyncOffTime[32];
-   char str_ASyncOnTime[32];
-   char str_ReadPower[32];
-   char str_WritePower[32];
-   char str_CheckAntenna[32];
-   char str_PortSwitchGPOs[32];
-   char str_str_PortSwitchGPOs[32];
-   char str_InputList[32];
-   char str_str_InputList[32];
-   char str_OutputList[32];
-   char str_str_OutputList[32];
-   char str_SettlingTime[32];
-   char str_PortRead[32];
-   char str_PortWrite[32];
-   char str_TxRxMap[32];
-   char str_AllowEarlyExit[32];
-   char str_EnablePowerSave[32];
-   char str_SJC[32];
-   char str_ExtendedEPC[32];
-   char str_HighestRSSI[32];
-   char str_UniqueAntenna[32];
-   char str_UniqueData[32];
-   char str_PowerMode[32];
-   char str_UserMode[32];
-   char str_ReportAntenna[32];
-   char str_ReportFrequency[32];
-   char str_ReportTemperature[32];
-   char str_WriteReplyTimeout[32];
-   char str_WriteMode[32];
-   char str_AccessPassword[32];
-   char str_TagEncoding[32];
-   char str_session[32];
-   char str_target[32];
-   char str_q[32];
-   char str_tari[32];
-   char str_readPlan[32];
-   char str_ISOBLF[32];
-   char str_modulation[32];
-   char str_delimiter[32];
-   char str_region[32];
-   char str_hopTime[32];
-   char str_HopTable[32];
-   char str_str_HopTable[32];
-   FILE *infile;
+   FILE *outfile;
    int i;
    int j;
    int k;
    
-   infile = fopen("/usr/lib/cgi-bin/brominedump", "r");
-   fscanf(infile, "ReaderDescription=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s \
+   outfile = fopen("/usr/lib/cgi-bin/readerdump", "w");
+   fprintf(outfile, "ReaderDescription=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s \
  ASyncOnTime=%s ReadPower=%s WritePower=%s CheckAntenna=%s PortSwitchPins=%s InputPins=%s OutputPins=%s SettlingTime=%s PortRead=%s PortWrite=%s TxRxMap=%s EarlyExit=%s PowerSave=%s \
  SJC=%s ExtendedEPC=%s HighestRSSI=%s UniqueAntenna=%s UniqueData=%s PowerMode=%s UserMode=%s ReportAntenna=%s ReportFrequency=%s ReportTemperature=%s GEN2WriteReplyTimeout=%s \
  GEN2WriteMode=%s GEN2AccessPassword=%s GEN2TagEncoding=%s GEN2Session=%s GEN2Target=%s GEN2Q=%s Tari=%s ReadPlan=%s ISOBLF=%s ISOModulationDepth=%s ISODelimiter=%s CurrentRegion=%s \
@@ -803,7 +625,7 @@ void importReaderConfig()
  str_ReportFrequency, str_ReportTemperature, str_WriteReplyTimeout, str_WriteMode, str_AccessPassword, str_TagEncoding, str_session, str_target, str_q, str_tari, str_readPlan, str_ISOBLF,\
  str_modulation, str_delimiter, str_region, str_hopTime, str_HopTable);
 
-   fclose(infile);
+   fclose(outfile);
 
 /* settlingtime
 portread
@@ -814,58 +636,53 @@ readplan
  
 /* integers */
 
-      BaudRate = atoi(str_BaudRate);
-      CommandTimeout = atoi(str_commandTimeout);
-      TransportTimeout = atoi(str_transportTimeout);
-      ASyncOffTime = atoi(str_ASyncOffTime);
-      ASyncOnTime = atoi(str_ASyncOnTime);
-      HopTime = atoi(str_hopTime);
-      Gen2WriteReplyTimeout = atoi(str_WriteReplyTimeout);
-      ReadPower = atoi(str_ReadPower);
-      WritePower = atoi(str_WritePower);
-      Antenna = atoi(str_antenna);
-      ReadFilterTimeout = atoi(str_ReadFilterTimeout);
-      accessPassword = atoi(str_AccessPassword);
-      ISOBLF = atoi(str_ISOBLF);
+      sprintf(str_BaudRate, "%d",BaudRate);
+      sprintf(str_commandTimeout, "%d", CommandTimeout);
+      sprintf(str_transportTimeout, "%d", TransportTimeout);
+      sprintf(str_ASyncOffTime, "%d", ASyncOffTime);
+      sprintf(str_ASyncOnTime, "%d", ASyncOnTime);
+      sprintf(str_hopTime, "%d", HopTime);
+      sprintf(str_WriteReplyTimeout, "%d", Gen2WriteReplyTimeout);
+      sprintf(str_ReadPower, "%d", ReadPower);
+      sprintf(str_WritePower, "%d", WritePower);
+      sprintf(str_antenna, "%d", Antenna);
+      sprintf(str_ReadFilterTimeout, "%d", ReadFilterTimeout);
+      sprintf(str_AccessPassword, "%d", accessPassword);
+      sprintf(str_ISOBLF, "%d", ISOBLF);
 
 /* booleans */
 
-      CheckPort = atoi(str_CheckAntenna);
-      WriteEarlyExit = atoi(str_AllowEarlyExit);
-      EnablePowerSave = atoi(str_EnablePowerSave);
-      AntennaEnable = atoi(str_ReportAntenna);
-      FrequencyEnable = atoi(str_ReportFrequency);
-      TemperatureEnable = atoi(str_ReportTemperature);
-      RecordHighestRSSI = atoi(str_HighestRSSI);
-      UniqueByAntenna = atoi(str_UniqueAntenna);
-      UniqueByData = atoi(str_UniqueData);
-      EnableSJC = atoi(str_SJC);
-      ExtendedEPC = atoi(str_ExtendedEPC);
-      EnableReadFilter = atoi(str_EnableReadFilter);
-
-/* regular string */
-
-      for(i = 0; i < strlen(stringDescription); i++)
-      {
-         if(stringDescription[i] == '+')
-            stringDescription[i] = ' ';
-      }  
+      sprintf(str_CheckAntenna, "%d", CheckPort);
+      sprintf(str_AllowEarlyExit, "%d", WriteEarlyExit);
+      sprintf(str_EnablePowerSave, "%d", EnablePowerSave);
+      sprintf(str_ReportAntenna, "%d", AntennaEnable);
+      sprintf(str_ReportFrequency, "%d", FrequencyEnable);
+      sprintf(str_ReportTemperature, "%d", TemperatureEnable);
+      sprintf(str_HighestRSSI, "%d", RecordHighestRSSI);
+      sprintf(str_UniqueAntenna, "%d", UniqueByAntenna);
+      sprintf(str_UniqueData, "%d", UniqueByData);
+      sprintf(str_SJC, "%d", EnableSJC);
+      sprintf(str_ExtendedEPC, "%d", ExtendedEPC);
+      sprintf(str_EnableReadFilter, "%d" ,EnableReadFilter);
 
 /* time */
-
-      for(i = 0; i < strlen(str_currentTime); i++)
-      {
-         if(str_currentTime[i] == '/' || str_currentTime[i] == ':' || str_currentTime[i] == '+')
-            str_currentTime[i] = ' ';
-      }  
-      sscanf(str_currentTime, "%s %s %s %s %s %s", str_year, str_month, str_day, str_hour, str_min, str_sec);
-      currentTime.tm_year = atoi(str_year)-1970;
-      currentTime.tm_mon = atoi(str_month);
-      currentTime.tm_mday = atoi(str_day);
-      currentTime.tm_hour = atoi(str_hour);
-      currentTime.tm_min = atoi(str_min);
-      currentTime.tm_sec = atoi(str_sec);
-
+      sprintf(str_year, "%d", currentTime.tm_year+1970);
+      sprintf(str_month, "%d", currentTime.tm_mon);
+      sprintf(str_day, "%d", currentTime.tm_mday);
+      sprintf(str_hour, "%d", currentTime.tm_hour);
+      sprintf(str_min, "%d", currentTime.tm_min);
+      sprintf(str_sec, "%d", currentTime.tm_sec);
+      strcpy(str_currentTime, str_year);
+      strcat(str_currentTime, "/");
+      strcat(str_currentTime, str_month);
+      strcat(str_currentTime, "/");
+      strcat(str_currentTime, str_day);
+      strcat(str_currentTime, " ");
+      strcat(str_currentTime, str_hour);
+      strcat(str_currentTime, ":");
+      strcat(str_currentTime, str_min);
+      strcat(str_currentTime, ":");
+      strcat(str_currentTime, str_sec);
 /* arrays */
 /*
       i = 0; // 1st char of current block
@@ -960,74 +777,88 @@ readplan
                                                                      else if (str_region == RegionList[13])
                                                                           region = TMR_REGION_OPEN;
 */
-       if (str_UserMode == UserModeList[0])
-         userMode = TMR_SR_USER_MODE_UNSPEC;
-         else if (str_UserMode == UserModeList[1])
-              userMode = TMR_SR_USER_MODE_PRINTER;
-              else if (str_UserMode == UserModeList[2])
-                   userMode = TMR_SR_USER_MODE_CONVEYOR;
-                   else if (str_UserMode == UserModeList[3])
-                        userMode = TMR_SR_USER_MODE_PORTAL;
-                        else if (str_UserMode == UserModeList[4])
-                             userMode = TMR_SR_USER_MODE_HANDHELD;
-       if (str_PowerMode == PowerModeList[0])
-         powerMode = TMR_SR_POWER_MODE_FULL;
-         else if (str_PowerMode == PowerModeList[1])
-              powerMode = TMR_SR_POWER_MODE_MINSAVE;
-              else if (str_PowerMode == PowerModeList[2])
-                   powerMode = TMR_SR_POWER_MODE_MEDSAVE;
-                   else if (str_PowerMode == PowerModeList[3])
-                        powerMode = TMR_SR_POWER_MODE_MAXSAVE;
-                        else if (str_PowerMode == PowerModeList[4])
-                             powerMode = TMR_SR_POWER_MODE_SLEEP;
-       if (str_TagEncoding == tagEncodingNames[0])
-         tagEncoding = TMR_GEN2_FM0;
-         else if (str_TagEncoding == tagEncodingNames[1])
-              tagEncoding = TMR_GEN2_MILLER_M_2;
-              else if (str_TagEncoding == tagEncodingNames[2])
-                   tagEncoding = TMR_GEN2_MILLER_M_4;
-                   else if (str_TagEncoding == tagEncodingNames[3])
-                        tagEncoding = TMR_GEN2_MILLER_M_8;
-        if (str_session == sessionNames[0])
-         session = TMR_GEN2_SESSION_S0;
-         else if (str_session == sessionNames[1])
-              session = TMR_GEN2_SESSION_S1;
-              else if (str_session == sessionNames[2])
-                   session = TMR_GEN2_SESSION_S2;
-                   else if (str_session == sessionNames[3])
-                        session = TMR_GEN2_SESSION_S3;
-         if (str_target == targetNames[0])
-         target = TMR_GEN2_TARGET_A;
-         else if (str_target == targetNames[1])
-              target = TMR_GEN2_TARGET_B;
-              else if (str_target == targetNames[2])
-                   target = TMR_GEN2_TARGET_AB;
-                   else if (str_target == targetNames[3])
-                        target = TMR_GEN2_TARGET_BA;
-         if (strcmp(str_q, "Dynamic") != 0)
-         q.type = TMR_SR_GEN2_Q_DYNAMIC;
-         else if (strcmp(str_q, "Static") != 0)
-              q.type = TMR_SR_GEN2_Q_STATIC;
-         if (strcmp(str_WriteMode, "Word Only") != 0) 
-            writeMode = TMR_GEN2_WORD_ONLY;
-         else if (strcmp(str_WriteMode, "Block Only") != 0)
-                 writeMode = TMR_GEN2_BLOCK_ONLY;
-              else if (strcmp(str_WriteMode, "Block Fallback") != 0)
-                      writeMode = TMR_GEN2_BLOCK_FALLBACK;
-         if (str_tari == tariNames[0])
-         tari = TMR_GEN2_TARI_25US;
-         else if (str_tari == tariNames[1])
-              tari = TMR_GEN2_TARI_12_5US;
-              else if (str_tari == tariNames[2])
-                   tari = TMR_GEN2_TARI_6_25US;
-         if (strcmp(str_delimiter, "Delimiter1") != 0)
-         delimiter = TMR_ISO180006B_Delimiter1;
-         else if (strcmp(str_delimiter, "Delimiter4") != 0)
-              delimiter = TMR_ISO180006B_Delimiter4;
-         if (strcmp(str_modulation, "99") != 0)
-         modulation = TMR_ISO180006B_ModulationDepth99percent;
-         else if (strcmp(str_modulation, "11") != 0)
-              modulation = TMR_ISO180006B_ModulationDepth11percent;
+       if (userMode == TMR_SR_USER_MODE_UNSPEC)
+          strcpy(str_UserMode, "Unspecified");
+          else if (userMode == TMR_SR_USER_MODE_PRINTER)
+               strcpy(str_UserMode, "Printer");
+               else if (userMode == TMR_SR_USER_MODE_CONVEYOR)
+                    strcpy(str_UserMode, "Conveyor");
+                    else if (userMode == TMR_SR_USER_MODE_PORTAL)
+                         strcpy(str_UserMode, "Portal");
+                         else if (userMode == TMR_SR_USER_MODE_HANDHELD)
+                              strcpy(str_UserMode, "Handheld");
+       if (powerMode == TMR_SR_POWER_MODE_FULL)
+          strcpy(str_PowerMode, "Full");
+          else if (powerMode == TMR_SR_POWER_MODE_MINSAVE)
+               strcpy(str_PowerMode, "MinSave");
+               else if (powerMode == TMR_SR_POWER_MODE_MEDSAVE)
+                    strcpy(str_PowerMode, "MedSave");
+                    else if (powerMode == TMR_SR_POWER_MODE_MAXSAVE)
+                         strcpy(str_PowerMode, "MaxSave");
+                         else if (powerMode == TMR_SR_POWER_MODE_SLEEP)
+                              strcpy(str_PowerMode, "Sleep");
+       if (tagEncoding == TMR_GEN2_FM0)
+          strcpy(str_TagEncoding, "FM0");
+          else if (tagEncoding == TMR_GEN2_MILLER_M_2)
+               strcpy(str_TagEncoding, "M2");
+               else if (tagEncoding == TMR_GEN2_MILLER_M_4)
+                    strcpy(str_TagEncoding, "M4");
+                    else if (tagEncoding == TMR_GEN2_MILLER_M_8)
+                         strcpy(str_TagEncoding, "M8");
+        if (session == TMR_GEN2_SESSION_S0)
+           strcpy(str_session, "S0");
+           else if (session == TMR_GEN2_SESSION_S1)
+                   strcpy(str_session, "S1");
+                else if (session == TMR_GEN2_SESSION_S2)
+                     strcpy(str_session, "s2");
+                     else if (session == TMR_GEN2_SESSION_S3)
+                          strcpy(str_session, "S3");
+         if (target == TMR_GEN2_TARGET_A)
+            strcpy(str_target, "A");
+            else if (target == TMR_GEN2_TARGET_B)
+                    strcpy(str_target, "B");
+                 else if (target == TMR_GEN2_TARGET_AB)
+                         strcpy(str_target, "AB");
+                      else if (target == TMR_GEN2_TARGET_BA)
+                              strcpy(str_target, "BA");
+         if (q.type == TMR_SR_GEN2_Q_DYNAMIC)
+            strcpy(str_q, "Dynamic");
+            else if (q.type == TMR_SR_GEN2_Q_STATIC)
+                    strcpy(str_q, "Static");
+         if (writeMode == TMR_GEN2_WORD_ONLY)
+            strcpy(str_WriteMode, "Word Only");
+            else if (writeMode == TMR_GEN2_BLOCK_ONLY)
+                    strcpy(str_WriteMode, "Block Only");
+                 else if (writeMode == TMR_GEN2_BLOCK_FALLBACK)
+                         strcpy(str_WriteMode, "Black Fallback");
+         if (tari == TMR_GEN2_TARI_25US)
+            strcpy(str_tari, "25us");
+            else if (tari == TMR_GEN2_TARI_12_5US)
+                    strcpy(str_tari, "12.5us");
+                 else if (tari == TMR_GEN2_TARI_6_25US)
+                         strcpy(str_tari, "6.25us");
+         if (delimiter == TMR_ISO180006B_Delimiter1)
+            strcpy(str_delimiter, "Delimiter1");
+            else if (delimiter == TMR_ISO180006B_Delimiter4)
+                    strcpy(str_delimiter, "Delimiter4");
+         if (modulation == TMR_ISO180006B_ModulationDepth99percent)
+            strcpy(str_modulation, "99");
+            else if (modulation == TMR_ISO180006B_ModulationDepth11percent)
+                    strcpy(str_modulation, "11");
+
+   outfile = fopen("/usr/lib/cgi-bin/readerdump", "w");
+   fprintf(outfile, "ReaderDescription=%s ReaderTime=%s CurrentAntenna=%s BaudRate=%s CommandTimeout=%s TransportTimeout=%s EnableReadFilter=%s ReadFilterTimeout=%s ASyncOffTime=%s \
+ ASyncOnTime=%s ReadPower=%s WritePower=%s CheckAntenna=%s PortSwitchPins=%s InputPins=%s OutputPins=%s SettlingTime=%s PortRead=%s PortWrite=%s TxRxMap=%s EarlyExit=%s PowerSave=%s \
+ SJC=%s ExtendedEPC=%s HighestRSSI=%s UniqueAntenna=%s UniqueData=%s PowerMode=%s UserMode=%s ReportAntenna=%s ReportFrequency=%s ReportTemperature=%s GEN2WriteReplyTimeout=%s \
+ GEN2WriteMode=%s GEN2AccessPassword=%s GEN2TagEncoding=%s GEN2Session=%s GEN2Target=%s GEN2Q=%s Tari=%s ReadPlan=%s ISOBLF=%s ISOModulationDepth=%s ISODelimiter=%s CurrentRegion=%s \
+ FrequencyHopTime=%s FrequencyHopTable=%s", stringDescription, str_currentTime, str_antenna, str_BaudRate, str_commandTimeout, str_transportTimeout, str_EnableReadFilter, str_ReadFilterTimeout,\
+ str_ASyncOffTime, str_ASyncOnTime, str_ReadPower, str_WritePower, str_CheckAntenna, str_PortSwitchGPOs, str_InputList, str_OutputList, str_SettlingTime, str_PortRead, str_PortWrite,\
+ str_TxRxMap, str_AllowEarlyExit, str_EnablePowerSave, str_SJC, str_ExtendedEPC, str_HighestRSSI, str_UniqueAntenna, str_UniqueData, str_PowerMode, str_UserMode, str_ReportAntenna,\
+ str_ReportFrequency, str_ReportTemperature, str_WriteReplyTimeout, str_WriteMode, str_AccessPassword, str_TagEncoding, str_session, str_target, str_q, str_tari, str_readPlan, str_ISOBLF,\
+ str_modulation, str_delimiter, str_region, str_hopTime, str_HopTable);
+
+   fclose(outfile);
+
 }
 
 void initVars()
@@ -1060,6 +891,62 @@ void initVars()
    EnableReadFilter = 0;
    ExtendedEPC = 0;
    region = TMR_REGION_NA; 
+   strcpy(str_currentTime, "\0");
+   strcpy(str_year, "\0");
+   strcpy(str_month, "\0");
+   strcpy(str_day, "\0");
+   strcpy(str_hour, "\0");
+   strcpy(str_min, "\0");
+   strcpy(str_sec, "\0");
+   strcpy(str_antenna, "\0");
+   strcpy(str_BaudRate, "\0");
+   strcpy(str_commandTimeout, "\0");
+   strcpy(str_transportTimeout, "\0");
+   strcpy(str_EnableReadFilter, "\0");
+   strcpy(str_ReadFilterTimeout, "\0");
+   strcpy(str_ASyncOffTime, "\0");
+   strcpy(str_ASyncOnTime, "\0");
+   strcpy(str_ReadPower, "\0");
+   strcpy(str_WritePower, "\0");
+   strcpy(str_CheckAntenna, "\0");
+   strcpy(str_PortSwitchGPOs, "\0");
+   strcpy(str_str_PortSwitchGPOs, "\0");
+   strcpy(str_InputList, "\0");
+   strcpy(str_str_InputList, "\0");
+   strcpy(str_OutputList, "\0");
+   strcpy(str_str_OutputList, "\0");
+   strcpy(str_SettlingTime, "\0");
+   strcpy(str_PortRead, "\0");
+   strcpy(str_PortWrite, "\0");
+   strcpy(str_TxRxMap, "\0");
+   strcpy(str_AllowEarlyExit, "\0");
+   strcpy(str_EnablePowerSave, "\0");
+   strcpy(str_SJC, "\0");
+   strcpy(str_ExtendedEPC, "\0");
+   strcpy(str_HighestRSSI, "\0");
+   strcpy(str_UniqueAntenna, "\0");
+   strcpy(str_UniqueData, "\0");
+   strcpy(str_PowerMode, "\0");
+   strcpy(str_UserMode, "\0");
+   strcpy(str_ReportAntenna, "\0");
+   strcpy(str_ReportFrequency, "\0");
+   strcpy(str_ReportTemperature, "\0");
+   strcpy(str_WriteReplyTimeout, "\0");
+   strcpy(str_WriteMode, "\0");
+   strcpy(str_AccessPassword, "\0");
+   strcpy(str_TagEncoding, "\0");
+   strcpy(str_session, "\0");
+   strcpy(str_target, "\0");
+   strcpy(str_q, "\0");
+   strcpy(str_tari, "\0");
+   strcpy(str_readPlan, "\0");
+   strcpy(str_ISOBLF, "\0");
+   strcpy(str_modulation, "\0");
+   strcpy(str_delimiter, "\0");
+   strcpy(str_region, "\0");
+   strcpy(str_hopTime, "\0");
+   strcpy(str_HopTable, "\0");
+   strcpy(str_str_HopTable, "\0");
 }
 
 int main(int argc, char *argv[])
@@ -1082,12 +969,7 @@ int main(int argc, char *argv[])
   setupReader("tmr:///dev/ttyACM0");
   getReaderConfig();
 //  printReaderConfig();
-//  importReaderConfig();
-//  printReaderConfig();
-//  setReaderConfig();
-//  printReaderConfig();
-//  initVars();
-//  getReaderConfig();
+  exportReaderConfig();
   printReaderConfig();
   TMR_destroy(rp);
   return 0;
