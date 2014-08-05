@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Content-type: text/plain\n\n"
+echo ""
+echo ${QUERY_STRING} > /var/www/radpy/Web/brominedump
+echo "{Status: 200, result: OK}"
+./Bromineset

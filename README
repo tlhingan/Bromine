@@ -1,4 +1,155 @@
+1.0 - Software Scope
+====================
 Bromine is a web-based reader configuration utility that employs ThingMagic's Mercury API.
-bromine.c is a c program that receives configuration settings from the webpage and writes them to a textfile called brominedump
-BromineGet.c is a c program that connects to the ThingMagic reader, polls it for it's complete configuration and prints it to the screen.
-BromineSet.c is a c program that connects to the ThingMagic reader, loads the configuration settings from the textfile brominedump and pushes the settings to the reader.
+
+1.1 - Software Layout
+=====================
+* bromine.html, the html form that sends data to brominewrite and loads data from readerdump
+* brominewrite, a bash script that receives the data from the html form and writes it to a text file called brominedump
+* bromineread, a bash script that launches Bromineget
+* Bromineset, the C program that loads the data from brominedump and sets the ThingMagic reader
+* Bromineget, the C program that reads the configuration from the ThingMagic reader and dumps it to a text file called readerdump
+* brominedump, the text file bromine.html dumps to and Bromineset reads from
+* readerdump, the text file Bromineget dumps to and bromine.html reads from
+* bromine.c is a c program that receives configuration settings from the webpage and writes them to a textfile called brominedump. It is currently not in use.
+
+1.2 - Software Configuration
+============================
+* /usr/lib/cgi-bin/ needs to contain:
+   * bromineread
+   * brominewrite
+   * Bromineget
+   * Bromineset
+
+* the webserver root folder needs to contain:
+   * bromine.html
+   * readerdump
+   * brominedump
+
+* all files need to have ownership and group membership set to www-data:www-data
+* readerdump and brominedump are text files and therefore need read and write permission set for all users
+* Bromineset and Bromineget are executibles while bromineread and brominewrite are scripts,  therefore all 4 files need the execute permission set for all users
+
+1.3 - Software Implementation
+=============================
+
+1.3.1 - Mercury API
+-------------------
+There are 72 settings in the Mercury API, 5 of which are not fully implemented (in Mercury), and have been marked as "not persistent" on the end-user facing bromine.html. They are:
+   * /reader/status/frequencyEnable
+   * /reader/status/antennaEnable
+   * /reader/status/temperatureEnable
+   * /reader/extendedEpc
+   * /reader/gen2/writeMode
+
+Of the 67 remaining settings, 10 do not persist after a reader disconnect/reconnect cycle and are therefore of no use in the current implementation of Bromine. These should be regarded as "for informational purposes only", and have been marked clearly labeled as "not persistent" on the user-facing bromine.html. They are:
+   * /reader/baudRate
+   * /reader/description
+   * /reader/tagop/antenna
+   * /reader/commandTimeout
+   * /reader/transportTimeout
+   * /reader/read/asyncOffTime
+   * /reader/read/asyncOnTime
+   * /reader/powerMode
+   * /reader/gen2/accessPassword
+   * /reader/region/id
+
+Of the remaining 57 settings, 19 are read-only (by Mercury design). They are:
+   * /reader/radio/powerMax
+   * /reader/radio/powerMin
+   * /reader/tagReadData/tagopSuccesses
+   * /reader/tagReadData/tagopFailures
+   * /reader/version/productGroupID
+   * /reader/radio/temperature
+   * /reader/antenna/connectedPortList
+   * /reader/antenna/portList
+   * /reader/uri
+   * /reader/version/hardware
+   * /reader/version/software
+   * /reader/version/model
+   * /reader/version/productGroup
+   * /reader/version/serial
+   * /reader/region/supportedRegions
+   * /reader/version/supportedProtocols
+   * /reader/tagReadData/reportRssiInDbm
+   * /reader/region/lbt/enable
+   * /reader/gen2/BLF
+
+Of the 38 remaining settings, 3 are determined by the region selection and therefore not truely user writable. They are:
+   * /reader/region/hopTime
+   * /reader/radio/powerMax
+   * /reader/region/hopTable
+
+Of the 35 remaining settings, 11 have not been completely implemented in Bromine yet for various reasons. They are:
+   * /reader/antenna/settlingTimeList
+   * /reader/read/plan
+   * reader/stats/enable
+   * /reader/stats
+   * /reader/statistics
+   * /reader/licenseKey
+   * /reader/userConfig
+   * /reader/radio/portReadPowerList
+   * /reader/radio/portWritePowerList
+   * /reader/tagReadData/uniqueByProtocol
+   * /reader/antenna/txRxMap
+
+There are therefore 24 user writable settings that should be available pending the completion of implementation of Bromine. Settings that are fully implemented are:
+   * /reader/userMode
+   * /reader/antenna/checkPort
+   * /reader/antenna/portSwitchGpos
+   * /reader/gpio/inputList
+   * /reader/gpio/outputList
+   * /reader/gen2/q
+   * /reader/gen2/tagEncoding
+   * /reader/gen2/session
+   * /reader/gen2/target
+   * /reader/gen2/tari
+   * /reader/iso180006b/BLF
+   * /reader/iso180006b/modulationDepth
+   * /reader/iso180006b/delimiter
+   * /reader/radio/enablePowerSave
+   * /reader/radio/readPower
+   * /reader/radio/writePower
+   * /reader/tagReadData/uniqueByAntenna
+   * /reader/tagReadData/uniqueByData
+   * /reader/tagop/protocol
+   * /reader/radio/enableSJC
+   * /reader/tagReadData/enableReadFilter
+   * /reader/tagReadData/readFilterTimeout
+   * /reader/gen2/writeReplyTimeout
+   * /reader/gen2/writeEarlyExit
+
+1.3.2 - Bromine
+---------------
+There are 66 settings currently displayed by Bromine:
+   * 5 that are not fully implemented in Mercury (treated as read-only)
+   * 10 that do not persist after a reader disconnect (treated as read-only) 
+   * 3 that are determined by the region (treated as read-only)
+   * 18 that are read-only (in addition to 1 already counted as determined by the region)
+   * 30 that should be readable and writable, pending completion of implementation. (Readplan is not implemented as a readible setting because of it's complexity and low priority, while readplan, portread, portwrite, txrxmap and settling time are currently not writable, pending implementation) 
+
+2.0 - Intended Use
+==================
+Bromine is intended to quickly view and edit the complete configuration settings of a ThingMagic reader connected to a linux-based microcontroller. The need for such an interface became obvious when:
+   * different ThingMagic readers operating together were found to have been configured differently
+   * the demo program provided by ThingMagic to read and write these settings is:
+      * clumsy to use
+      * requires a command line interface
+      * requires foreknowledge of the location of said program
+      * requires the program to have been compiled on the current platform (and that is both a clumsy and time-intensive process)
+   * changing settings prior to a deployment often required recompiling our reading software
+   * configuring a ThingMagic reader completely requires intimate knowledge of proprietary, clumsy and poorly documented data formats defined by ThingMagic
+   * some setting names or their effect is unintuitive
+   * different reader models from different manufacturers are desired to have a similar or equivalent configuration, but use different proprietary APIs, interfaces and setting names
+
+3.0 - Authorship
+================
+The brunt of the development of this iteration was performed by Francesco Pisani (fpisani@sait.ca) of SAIT's RADLab with some support from Stephanie Krause and Christopher Zaal.
+
+4.0 - License
+=============
+This software is released under the MIT license.
+
+5.0 - Build Date
+================
+This version of the software was built and packaged on August 1st 2014.

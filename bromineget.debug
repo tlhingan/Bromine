@@ -162,7 +162,7 @@ bool EnableSJC = 0;
 bool EnableReadFilter = 0;
 bool ExtendedEPC = 0;
 
-TMR_Region region = TMR_REGION_NA; 
+TMR_Region region; 
 TMR_Region regionValue[32];
 struct TMR_RegionList regionList; /* non writable */
 TMR_SR_UserMode userMode;
@@ -939,7 +939,7 @@ int main(int argc, char *argv[])
   setupReader("tmr:///dev/ttyACM0");
   getReaderConfig();
 //  printReaderConfig();
-  exportReaderConfig();
+//  exportReaderConfig();
   printReaderConfig();
   TMR_destroy(rp);
   return 0;

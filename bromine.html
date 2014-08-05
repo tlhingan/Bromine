@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bromine</title>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta http-equiv="cache-control" content="max-age=0" />
+         <meta http-equiv="cache-control" content="no-cache" />
+         <meta http-equiv="cache-control" content="no-store" />
+         <meta http-equiv="expires" content="0" />
+         <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+         <meta http-equiv="pragma" content="no-cache" />
+         <link rel="stylesheet" href="/Javascript/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.min.css">
+         <style type="text/css">
+             #div-container-toggle {
+                 text-align:center;
+                 padding-left: 0.5%;
+                 padding-right: 0.5%;
+                 height: 100%;
+                 margin:0 auto;
+                 margin-right:0;
+             }
+         </style>
+         <script type="text/javascript" src="/Javascript/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+         <script type="text/javascript" src="/Javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+         <link rel="stylesheet" type="text/css" href="/Javascript/Jit/Examples/css/base.css"/>
+         <link rel="Stylesheet" type="text/css" href="/Javascript/Jit/Examples/css/ForceDirected.css" />
+         <script type="text/javascript" src="/Javascript/radpy.js"></script>
+         <script type="text/javascript" src="/Javascript/Jit/jit.js"></script> 
+         <script type="text/javascript" src="/Javascript/comminglingGraph.js"></script>
+         <script type="text/javascript" src="/Javascript/Enums.js"></script>     
+         <script type="text/javascript" src="/Javascript/Ajax.js"></script>
+         <script type="text/javascript" src="/Javascript/SearchMethods.js"></script>
+         <script type="text/javascript" src="/Javascript/FormEvents.js"></script>
+         <script type="text/javascript" src="/Javascript/Dom.js"></script>
+         <script type="text/javascript" src="/Javascript/BDOForms.js"></script>
+         <script type="text/javascript" src="/Javascript/GridView.js"></script>
+         <script type="text/javascript" src="/Javascript/GenericPopup.js"></script>
+         <script type="text/javascript" src="/Javascript/DocumentPopup.js"></script>
+         <script type="text/javascript" src="/Javascript/TableTop.js"></script>
+         <script type="text/Javascript" src="/Javascript/toolkit.js"></script>
+</head>
+<body>
+      <nav>
+             <div><a id="home" href="/">Home</a></div>
+             <ul id="secondary">
+                 <li><a href="#">Account Information</a></li>
+                 <li><a id="menu-button" href="#">Show Menu</a></li>
+             </ul>
+             <ul id="nav-top">
+                 <li><a>Data Management</a>
+                     <ul>
+                         <li><a href="/EntityManager.html?entity=Document">Documents</a></li>
+                     </ul>
+                 </li>
+                 <li><a>Configuration</a>
+                     <ul>
+                         <li><a href="/EntityManager.html?entity=FieldDefinition">Field Definitions</a></li>
+                         <li><a href="/EntityManager.html?entity=DocumentDefinition">Document Definitions</a></li>
+                     </ul>
+                 </li>
+                 <li><a>Demos</a>
+                     <ul>
+                         <li><a href="/Demos/TableTop.html">Tabletop</a></li>
+                         <li><a href="#">ILC</a></li>
+                     </ul>
+                 </li>
+                 <li><a href="#">Lab Write</a></li>
+                 <li><a href="#">Dean Test</a></li>
+                 <li><a>tlhIngan's Play Area</a>
+                     <ul>
+                          <li><a href="antennaPower.html">Antenna Power Calculator</a></li>
+                          <li><a href="bromine.html">Bromine</a></li>
+                    </ul>
+                 </li>
+
+             </ul>
+         </nav>
+<form id="ReaderConfig" action="/cgi-bin/brominewrite">
+<table>
+<tr><td><br />URI:</td><td><br /><p id="URI"></td></tr>
+<tr><td>Hardware Version:</td><td><p id="HardwareVersion"></td></tr>
+<tr><td>Product Group:</td><td><p id="ProductGroup"></td></tr>
+<tr><td>Model:</td><td><p id="Model"></td></tr>
+<tr><td>Serial Number:</td><td><p id="SerialNumber"></td></tr>
+<Tr><td>Reader Description:</td><td><input type="text" name="ReaderDescription" id="ReaderDescription"></td><td> (not persistent)</td></tr>
+<tr><td>Software Version:</td><td><p id="SoftwareVersion"></td></tr>
+<tr><td>Temperature:</td><td><p  id="Temperature"></td></tr>
+<tr><td>Reader Time (yyyy/mm/dd hh:mm:ss):</td><td><input type="text" name="ReaderTime" id="ReaderTime"></td></tr>
+<tr><td>Antenna Currently Being Used:</td><td><input type="text" name="CurrentAntenna" id="CurrentAntenna"></td><td> (not persistent)</td></tr>
+<tr><td>Baud Rate:</td><td><select name="BaudRate" id="BaudRate"></select></td><td> (not persistent)</td></tr>
+<tr><td>Command Timeout:</td><td><input type="text" name="CommandTimeout" id="CommandTimeout"></td><td> (not persistent)</td></tr>
+<tr><td>Transport Timeout:</td><td><input type="text" name="TransportTimeout" id="TransportTimeout"></td><td> (not persistent)</td></tr>
+<tr><td>Enable Read Filter:</td><td><p id="EnableReadFilter_"></td></tr>
+<tr><td>Read Filter Timeout:</td><td><input type="text" name="ReadFilterTimeout" id="ReadFilterTimeout"></td></tr>
+<tr><td>ASync Off Time:</td><td><input type="text" name="ASyncOffTime" id="ASyncOffTime"></td><td> (not persistent)</td></tr>
+<tr><td>ASync On Time::</td><td><input type="text" name="ASyncOnTime" id="ASyncOnTime"></td><td> (not persistent)</td></tr>
+<tr><td>Maximum Power:</td><td><p id="MaxPower"></td></tr>
+<tr><td>Minimum Power:</td><td><p id="MinPower"></td></tr>
+<tr><td>Read Power:</td><td><input type="text" name="ReadPower" id="ReadPower"></td></tr>
+<tr><td>Write Power:</td><td><input type="text" name="WritePower" id="WritePower"></td></tr>
+<tr><td>Successful Tag Operations:</td><td><p id="SuccessfulTagOp"></td></tr>
+<tr><td>Failed Tag Operations:</td><td><p id="FailedTagOp"></td></tr>
+<tr><td>Check Antenna Port:</td><td><p id="CheckAntenna_"></td></tr>
+<tr><td>Connected Antenna Ports:</td><td><p id="ConnectedAntenna"></td></tr>
+<tr><td>Available Antenna Ports:</td><td><p id="AvailableAntenna"></td></tr>
+<tr><td>Available GPIO Port Switching Pins:</td><td><input type="text" name="PortSwitchPins" id="PortSwitchPins"></td></tr>
+<tr><td>Available GPIO Input Pins:</td><td><input type="text" name="InputPins" id="InputPins"></td></tr>
+<tr><td>Available GPIO Output Pins:</td><td><input type="text" name="OutputPins" id="OutputPins"></td></tr>
+<tr><td>Port Number/Settling Time:</td><td><input type="text" name="SettlingTime" id="SettlingTime"></td></tr>
+<tr><td>Port Number/Read Length:</td><td><input type="text" name="PortRead" id="PortRead"></td></tr>
+<tr><td>Port Number/ Write Length:</td><td><input type="text" name="PortWrite" id="PortWrite"></td></tr>
+<tr><td>Tx/Rx Map:</td><td><input type="text" name="TxRxMap" id="TxRxMap"></td></tr>
+<tr><td>Allow Early Exit:</td><td><p id="EarlyExit_"></td></tr>
+<tr><td>Enable Powersave (Disable DRM):</td><td><p id="PowerSave_"></td></tr>
+<tr><td>Enable LBT:</td><td><p id="LBT"></td></tr>
+<tr><td>Enable SJC:</td><td><p id="SJC_"></td></tr>
+<tr><td>Extended EPC:</td><td><p id="ExtendedEPC_"></td><td> (not persistent)</td></tr>
+<tr><td>Record Highest RSSI:</td><td><p id="HighestRSSI_"></td></tr>
+<tr><td>Report RSSI in dBm:</td><td><p id="RSSIdBm"></td></tr>
+<tr><td>Report Unique Tag Reads by Antenna:</td><td><p id="UniqueAntenna_"></td></tr>
+<tr><td>Report Unique Tag Reads by Data:</td><td><p id="UniqueData_"></td></tr>
+<tr><td>Power Mode:</td><td><select name="PowerMode" id="PowerMode"></select></td><td> (not persistent)</td></tr>
+<tr><td>User Mode:</td><td><select name="UserMode" id="UserMode"></select></td></tr>
+<tr><td>Report Antennas:</td><td><p id="ReportAntenna_"></td><td> (not persistent)</td></tr>
+<tr><td>Report Frequency:</td><td><p id="ReportFrequency_"></td><td> (not persistent)</td></tr>
+<tr><td>Report Temperature:</td><td><p id="ReportTemperature_"></td><td> (not persistent)</td></tr>
+<tr><td>Gen2 Backscatter Link Frequency:</td><td><p id="GEN2BLF"></td></tr>
+<tr><td>Gen2 Write Reply Timeout:</td><td><input type="text" name="GEN2WriteReplyTimeout" id="GEN2WriteReplyTimeout"></td></tr>
+<tr><td>Gen2 Write Mode:</td><td><select name="GEN2WriteMode" id="GEN2WriteMode"></select></td><td> (not persistent)</td></tr>
+<tr><td>Gen2 Access Password:</td><td><input type="text" name="GEN2AccessPassword" id="GEN2AccessPassword"></td><td> (not persistent)</td></tr>
+<tr><td>Gen2 Tag Encoding Method:</td><td><select name="GEN2TagEncoding" id="GEN2TagEncoding"></select></td></tr>
+<tr><td>Gen2 Session:</td><td><select name="GEN2Session" id="GEN2Session"></select></td></tr>
+<tr><td>Gen2 target Algorythm:</td><td><select name="GEN2Target" id="GEN2Target"></select></td></tr>
+<tr><td>Dynamic or Static Q Algorythm:</td><td><p id="GEN2Q_"></td></tr>
+<tr><td>Tari:</td><td><select name="Tari" id="Tari"></select></td></tr>
+<tr><td>Supported Protocols:</td><td><p id="SupportedProtocols"></td></tr>
+<tr><td>Current Protocol:</td><td><p id="CurrentProtocol"></td></tr>
+<tr><td>Read Plan:</td><td><input type="text" name="ReadPlan" id="ReadPlan"></td></tr>
+<tr><td>ISO180006B Backscatter Link Frequency:</td><td><p id="ISOBLF_"></td></tr>
+<tr><td>ISO180006B Modulation Depth:</td><td><p id="ISOModulationDepth_"></td></tr>
+<tr><td>ISO180006B Delimiter:</td><td><p id="ISODelimiter_"></td></tr>
+<tr><td>Supported Regions:</td><td><p id="SupportedRegions"></td></tr>
+<tr><td>Current Region:</td><td><select name="CurrentRegion" id="CurrentRegion"></select></td><td> (not persistent)</td></tr>
+<tr><td>Frequency Hop Time:</td><td><input type="text" name="FrequencyHopTime" id="FrequencyHopTime"></td></tr>
+<tr><td>Frequency Hop Table:</td><td><textarea name="FrequencyHopTable" id="FrequencyHopTable"></textarea></td></tr>
+<tr><td><input type="submit" value="Send Config To Reader"></td>
+<td><input type="button" onClick="loadFile()" value="Get Config From Reader"></td></tr>
+</table>
+</form>
+<script type="text/javascript">
+function loadFile()
+{
+   placeholder = window.open('/cgi-bin/bromineread', '_blank');
+   placeholder.close();
+   document.getElementById("ReaderConfig").reset();
+   var readFile = new XMLHttpRequest();
+   setTimeout(function()
+   {
+      readFile.open('GET', 'readerdump', true);
+      readFile.setRequestHeader("If-Modified-Since", "Sat, 1 Jan 2005 00:00:00 GMT");
+      readFile.onreadystatechange = function()
+      {
+         if (readFile.readyState == 4)
+         {
+            if (readFile.status == 200)
+            {
+            var textFile = readFile.responseText.split("=");
+            var regionList = textFile[121].split(", ");
+            var baudrateMenu = "";
+            var readFilterMenu = "";
+            var checkAntennaMenu = "";
+            var earlyExitMenu = "";
+            var powerSaveMenu = "";
+            var SJCMenu = "";
+            var extendedEPCMenu = "";
+            var highestRSSIMenu = "";
+            var uniqueAntennaMenu = "";
+            var uniqueDataMenu = "";
+            var powerModeMenu = "";
+            var userModeMenu = "";
+            var reportAntennaMenu = "";
+            var reportFrequencyMenu = "";
+            var reportTemperatureMenu = "";
+            var GEN2WriteMenu = "";
+            var GEN2TagEncodingMenu = "";
+            var GEN2SessionMenu = "";
+            var GEN2TargetMenu = "";
+            var GEN2QMenu = "";
+            var TariMenu = "";
+            var ISOBLFMenu = "";
+            var modulationMenu = "";
+            var delimiterMenu = "";
+            var regionMenu = "";
+            document.getElementById("URI").innerHTML = textFile[1];
+            document.getElementById("HardwareVersion").innerHTML = textFile[3];
+            document.getElementById("ProductGroup").innerHTML = textFile[5];
+            document.getElementById("Model").innerHTML = textFile[7];
+            document.getElementById("SerialNumber").innerHTML = textFile[9];
+            document.getElementById("ReaderDescription").value = textFile[11];
+            document.getElementById("SoftwareVersion").innerHTML = textFile[13];
+            document.getElementById("Temperature").innerHTML = textFile[15] + '&degC';
+            document.getElementById("ReaderTime").value = textFile[17];
+            document.getElementById("CurrentAntenna").value = textFile[19];
+            baudrateMenu += '<option value="9600"' + ((textFile[21] === "9600")? ' selected>9600</option>':'>9600</option>') + 
+                            '<option value="115200"' + ((textFile[21] === "115200")? ' selected>115200</option>':'>115200</option>') +
+                            '<option value="921600"' + ((textFile[21] === "921600")? ' selected>921600</option>':'>921600</option>');
+            $("#BaudRate").html(baudrateMenu);
+            document.getElementById("CommandTimeout").value = textFile[23];
+            document.getElementById("TransportTimeout").value = textFile[25];
+            readFilterMenu += '<input type="radio" name="EnableReadFilter" id="EnableReadFilter" value="1"' + ((textFile[27] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="EnableReadFilter" id="EnableReadFilter" value="0"' + ((textFile[27] === "0")? ' checked>No':'>No');
+            $("#EnableReadFilter_").html(readFilterMenu);
+            document.getElementById("ReadFilterTimeout").value = textFile[29];
+            document.getElementById("ASyncOffTime").value = textFile[31];
+            document.getElementById("ASyncOnTime").value = textFile[33];
+            document.getElementById("MaxPower").innerHTML = textFile[35];
+            document.getElementById("MinPower").innerHTML = textFile[37];
+            document.getElementById("ReadPower").value = textFile[39];
+            document.getElementById("WritePower").value = textFile [41];
+            document.getElementById("SuccessfulTagOp").innerHTML = textFile[43];
+            document.getElementById("FailedTagOp").innerHTML = textFile[45];
+            checkAntennaMenu += '<input type="radio" name="CheckAntenna" id="CheckAntenna" value="1"' + ((textFile[47] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="CheckAntenna" id="CheckAntenna" value="0"' + ((textFile[47] === "0")? ' checked>No':'>No');
+            $("#CheckAntenna_").html(checkAntennaMenu);
+            document.getElementById("ConnectedAntenna").innerHTML = textFile[49];
+            document.getElementById("AvailableAntenna").innerHTML = textFile[51];
+            document.getElementById("PortSwitchPins").value = textFile[53];
+            document.getElementById("InputPins").value = textFile[55];
+            document.getElementById("OutputPins").value = textFile[57];
+            document.getElementById("SettlingTime").value = textFile[59];
+            document.getElementById("PortRead").value = textFile[61];
+            document.getElementById("PortWrite").value = textFile[63];
+            document.getElementById("TxRxMap").value = textFile[65];
+            earlyExitMenu += '<input type="radio" name="EarlyExit" id="EarlyExit" value="1"' + ((textFile[67] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="EarlyExit" id="EarlyExit" value="0"' + ((textFile[67] === "0")? ' checked>No':'>No');
+            $("#EarlyExit_").html(earlyExitMenu);
+            powerSaveMenu += '<input type="radio" name="PowerSave" id="PowerSave" value="1"' + ((textFile[69] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="PowerSave" id="PowerSave" value="0"' + ((textFile[69] === "0")? ' checked>No':'>No');
+            $("#PowerSave_").html(powerSaveMenu);
+            SJCMenu += '<input type="radio" name="SJC" id="SJC" value="1"' + ((textFile[71] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="SJC" id="SJC" value="0"' + ((textFile[71] === "0")? ' checked>No':'>No');
+            $("#SJC_").html(SJCMenu);
+            extendedEPCMenu += '<input type="radio" name="ExtendedEPC" id="ExtendedEPC" value="1"' + ((textFile[73] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="ExtendedEPC" id="ExtendedEPC" value="0"' + ((textFile[73] === "0")? ' checked>No':'>No');
+            $("#ExtendedEPC_").html(extendedEPCMenu);
+            highestRSSIMenu += '<input type="radio" name="HighestRSSI" id="HighestRSSI" value="1"' + ((textFile[75] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="HighestRSSI" id="HighestRSSI" value="0"' + ((textFile[75] === "0")? ' checked>No':'>No');
+            $("#HighestRSSI_").html(highestRSSIMenu);
+            uniqueAntennaMenu += '<input type="radio" name="UniqueAntenna" id="UniqueAntenna" value="1"' + ((textFile[77] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="UniqueAntenna" id="UniqueAntenna" value="0"' + ((textFile[77] === "0")? ' checked>No':'>No');
+            $("#UniqueAntenna_").html(uniqueAntennaMenu);
+            uniqueDataMenu += '<input type="radio" name="UniqueData" id="UniqueData" value="1"' + ((textFile[79] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="UniqueData" id="UniqueData" value="0"' + ((textFile[79] === "0")? ' checked>No':'>No');
+            $("#UniqueData_").html(uniqueDataMenu);
+            powerModeMenu += '<option value="Full"' + ((textFile[81] === "Full")? ' selected>Full</option>':'>Full</option>') + 
+                            '<option value="Minsave"' + ((textFile[81] === "MinSave")? ' selected>MinSave</option>':'>MinSave</option>') +
+                            '<option value="MedSave"' + ((textFile[81] === "MedSave")? ' selected>MedSave</option>':'>MedSave</option>') +
+                            '<option value="MaxSave"' + ((textFile[81] === "MaxSave")? ' selected>MaxSave</option>':'>MaxSave</option>') +
+                            '<option value="Sleep"' + ((textFile[81] === "Sleep")? ' selected>Sleep</option>':'>Sleep</option>');
+            $("#PowerMode").html(powerModeMenu);
+            userModeMenu += '<option value="Unspecified"' + ((textFile[83] === "Unspecified")? ' selected>Unspecified</option>':'>Unspecified</option>') + 
+                            '<option value="Printer"' + ((textFile[83] === "Printer")? ' selected>Printer</option>':'>Printer</option>') +
+                            '<option value="Conveyor"' + ((textFile[83] === "Conveyor")? ' selected>Conveyor</option>':'>Conveyor</option>') +
+                            '<option value="Portal"' + ((textFile[83] === "Portal")? ' selected>Portal</option>':'>Portal</option>') +
+                            '<option value="Handheld"' + ((textFile[83] === "Handheld")? ' selected>Handheld</option>':'>Handheld</option>');
+            $("#UserMode").html(userModeMenu);
+            reportAntennaMenu += '<input type="radio" name="ReportAntenna" id="ReportAntenna" value="1"' + ((textFile[85] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="ReportAntenna" id="ReportAntenna" value="0"' + ((textFile[85] === "0")? ' checked>No':'>No');
+            $("#ReportAntenna_").html(reportAntennaMenu);
+            reportFrequencyMenu += '<input type="radio" name="ReportFrequency" id="ReportFrequency" value="1"' + ((textFile[87] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="ReportFrequency" id="ReportFrequency" value="0"' + ((textFile[87] === "0")? ' checked>No':'>No');
+            $("#ReportFrequency_").html(reportFrequencyMenu);
+            reportTemperatureMenu +=
+                            '<input type="radio" name="ReportTemperature" id="Reporttemperature" value="1"' + ((textFile[89] === "1")? ' checked>Yes&nbsp;&nbsp;&nbsp;':'>Yes&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="ReportTemperature" id="ReportTemperature" value="0"' + ((textFile[89] === "0")? ' checked>No':'>No');
+            $("#ReportTemperature_").html(reportTemperatureMenu);
+            document.getElementById("GEN2BLF").innerHTML = textFile[91];
+            document.getElementById("GEN2WriteReplyTimeout").value = textFile[93];
+            GEN2WriteMenu += '<option value="Word Only"' + ((textFile[95] === "Word Only")? ' selected>Word Only</option>':'>Word Only</option>') + 
+                            '<option value="Block Only"' + ((textFile[95] === "Block Only")? ' selected>Portal</option>':'>Block Only</option>') +
+                            '<option value="Block Fallback"' + ((textFile[95] === "Block Fallback")? ' selected>Block Fallback</option>':'>Block Fallback</option>'); 
+            $("#GEN2WriteMode").html(GEN2WriteMenu);
+            document.getElementById("GEN2AccessPassword").value = textFile[97];
+            GEN2TagEncodingMenu += '<option value="FM0"' + ((textFile[99] === "FM0")? ' selected>FM0</option>':'>FM0</option>') + 
+                            '<option value="M2"' + ((textFile[99] === "M2")? ' selected>M2</option>':'>M2</option>') +
+                            '<option value="M4"' + ((textFile[99] === "M4")? ' selected>M4</option>':'>M4</option>') +
+                            '<option value="M8"' + ((textFile[99] === "M8")? ' selected>M8</option>':'>M8</option>');
+            $("#GEN2TagEncoding").html(GEN2TagEncodingMenu);
+            GEN2SessionMenu += '<option value="S0"' + ((textFile[101] === "S0")? ' selected>S0</option>':'>S0</option>') + 
+                            '<option value="S1"' + ((textFile[101] === "S1")? ' selected>S1</option>':'>S1</option>') +
+                            '<option value="S2"' + ((textFile[101] === "S2")? ' selected>S2</option>':'>S2</option>') +
+                            '<option value="S3"' + ((textFile[101] === "S3")? ' selected>S3</option>':'>S3</option>');
+            $("#GEN2Session").html(GEN2SessionMenu);
+            GEN2TargetMenu += '<option value="A"' + ((textFile[103] === "A")? ' selected>A</option>':'>A</option>') + 
+                            '<option value="B"' + ((textFile[103] === "B")? ' selected>B</option>':'>B</option>') +
+                            '<option value="AB"' + ((textFile[103] === "AB")? ' selected>AB</option>':'>AB</option>') +
+                            '<option value="BA"' + ((textFile[103] === "BA")? ' selected>BA</option>':'>BA</option>');
+            $("#GEN2Target").html(GEN2TargetMenu);
+            GEN2QMenu += '<input type="radio" name="GEN2Q" id="GEN2Q" value="Dynamic"' + ((textFile[105] === "Dynamic")? ' checked>Dynamic&nbsp;&nbsp;&nbsp;':'>Dynamic&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="GEN2Q" id="GEN2Q" value="Static"' + ((textFile[105] === "Static")? ' checked>Static':'>Static');
+            $("#GEN2Q_").html(GEN2QMenu);
+            TariMenu += '<option value="6.25us"' + ((textFile[107] === "6.25us")? ' selected>6.25 us</option>':'>6.25 us</option>') + 
+                            '<option value="12.5us"' + ((textFile[107] === "12.5us")? ' selected>12.5 us</option>':'>12.5 us</option>') +
+                            '<option value="25us"' + ((textFile[107] === "25us")? ' selected>25 us</option>':'>25 us</option>');
+            $("#Tari").html(TariMenu);
+            document.getElementById("SupportedProtocols").innerHTML = textFile[109];
+            document.getElementById("CurrentProtocol").innerHTML = textFile[111];
+            document.getElementById("ReadPlan").value = textFile[113];
+            ISOBLFMenu += '<input type="radio" name="ISOBLF" id="ISOBLF" value="40"' + ((textFile[115] === "40")? ' checked>40 kHz&nbsp;&nbsp;&nbsp;':'>40 kHz&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="ISOBLF" id="ISOBLF" value="160"' + ((textFile[115] === "160")? ' checked>160 kHz':'>160 kHz');
+            $("#ISOBLF_").html(ISOBLFMenu);
+            modulationMenu +=
+                          '<input type="radio" name="ISOModulationDepth" id="ISOModulationDepth" value="99"' + ((textFile[117] === "99")? ' checked>99 %&nbsp;&nbsp;&nbsp;':'>99 %&nbsp;&nbsp;&nbsp;') + 
+                          '<input type="radio" name="ISOModulationDepth" id="ISOModulationDepth" value="11"' + ((textFile[117] === "11")? ' checked>11 %':'>11 %');
+            $("#ISOModulationDepth_").html(modulationMenu);
+            delimiterMenu += '<input type="radio" name="ISODelimiter" id="ISODelimiter" value="Delimiter1"' 
+                          + ((textFile[119] === "Delimiter1")? ' checked>Delimiter 1&nbsp;&nbsp;&nbsp;':'>Delimiter 1&nbsp;&nbsp;&nbsp;') + 
+                            '<input type="radio" name="ISODelimiter" id="ISODelimiter" value="Delimiter4"' + ((textFile[119] === "Delimiter4")? ' checked>Delimiter 4':'>Delimiter 4');
+            $("#ISODelimiter_").html(delimiterMenu);
+            document.getElementById("SupportedRegions").innerHTML = textFile[121];
+            for (var i = 0; i < regionList.length; i++)
+            {
+                if (regionList[i] === textFile[123])
+                   {
+                      regionMenu += '<option value="' + regionList[i] + '" selected>' + regionList[i] + '</option>';
+                   }
+                   else regionMenu += '<option value="' + regionList[i] + '">' + regionList[i] + '</option>';
+            }
+            $("#CurrentRegion").html(regionMenu)
+            document.getElementById("FrequencyHopTime").value = textFile[125];
+            document.getElementById("FrequencyHopTable").value = textFile[127];
+            document.getElementById("RSSIdBm").innerHTML = (textFile[129])? "Yes": "No";
+            document.getElementById("LBT").innerHTML = (textFile[131])? "Yes": "No";
+            }
+         }
+      }  
+      readFile.send();
+   }, 1000);
+} 
+
+$(document).ready(function()
+   {
+      $("form").on("submit", function(e)
+        {
+           e.preventDefault();
+           var brominedump = $(this).serialize();
+           var config = toolkit.getAjaxConfig($(this).attr("action") + "?" + brominedump);
+           config.type = "GET";
+           $.ajax(config);
+           console.log(brominedump);
+        });
+   });
+</script>
+
+</body>
+</html>
